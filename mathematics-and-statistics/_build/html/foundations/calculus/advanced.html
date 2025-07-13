@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'foundations/calculus/advanced';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -312,7 +314,7 @@
       
       
       
-      <li><a href="../../_sources/foundations/calculus/advanced.md" target="_blank"
+      <li><a href="../../_sources/foundations/calculus/advanced.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -322,7 +324,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -383,7 +385,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -399,6 +403,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Функции многих переменных и Градиент</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Аппроксимация рядами Тейлора</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Тригонометрические функции и периодичность</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -408,13 +422,194 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="id1">
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Продвинутые темы<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Освоив основы, мы можем перейти к инструментам, которые позволяют работать с более сложными и реалистичными ситуациями.</p>
+<section id="id2">
+<h2>Функции многих переменных и Градиент<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>До сих пор мы рассматривали функции вида <span class="math notranslate nohighlight">\(y = f(x)\)</span>, где один вход (<span class="math notranslate nohighlight">\(x\)</span>) определял один выход (<span class="math notranslate nohighlight">\(y\)</span>). Но в реальном мире результат почти всегда зависит от множества факторов.</p>
+<p>Например, цена дома (<span class="math notranslate nohighlight">\(z\)</span>) зависит от его площади (<span class="math notranslate nohighlight">\(x\)</span>) и удаленности от центра города (<span class="math notranslate nohighlight">\(y\)</span>). Это <strong>функция многих переменных</strong>, которая записывается как <span class="math notranslate nohighlight">\(z = f(x, y)\)</span>.</p>
+<p>Ее график — это уже не кривая, а <strong>поверхность</strong> в трехмерном пространстве.</p>
+<p>Вместо обычной производной здесь появляется понятие <strong>частной производной</strong>.</p>
 <ul class="simple">
-<li><p>Функции многих переменных</p></li>
-<li><p>Аппроксимация рядами Тейлора</p></li>
-<li><p>Тригонометрические функции</p></li>
+<li><p><strong>Частная производная по <span class="math notranslate nohighlight">\(x\)</span> (<span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}\)</span>)</strong>: Мы “замораживаем” все остальные переменные (считаем их константами) и смотрим, как быстро меняется функция, если двигаться только вдоль оси <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+<li><p><strong>Частная производная по <span class="math notranslate nohighlight">\(y\)</span> (<span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y}\)</span>)</strong>: То же самое, но двигаемся только вдоль оси <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
 </ul>
+<p>Набор всех частных производных функции <span class="math notranslate nohighlight">\(\nabla f = (\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y})\)</span> называется <strong>градиентом</strong>. Градиент — это вектор, который всегда указывает в сторону <strong>наискорейшего роста</strong> функции. Именно поэтому он так важен в машинном обучении: чтобы минимизировать ошибку, мы делаем шаг в направлении, <strong>противоположном</strong> градиенту (этот метод называется градиентным спуском).</p>
+<p>Давайте это визуализируем. Рассмотрим функцию:</p>
+<p><span class="math notranslate nohighlight">\(f(x, y) = \sin(\frac{1}{2}x^2 - \frac{1}{4}y^2 + 3) \cos(2x + 1 - e^y)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="c1"># Настроим красивые графики</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+
+<span class="c1"># Определяем функцию</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+<span class="c1"># Создаем сетку для 3D-графика</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Вычисляем градиент (частные производные) численно</span>
+<span class="n">Gy</span><span class="p">,</span> <span class="n">Gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+
+<span class="c1"># 3D-график поверхности</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Поверхность функции $f(x, y)$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="c1"># 2D-график (вид сверху) с векторами градиента</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="c1"># Рисуем векторы градиента</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Gx</span><span class="p">,</span> <span class="n">Gy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Линии уровня и векторы градиента (красный)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Значение f(x,y)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;На 2D-графике видно, что красные стрелки (градиент) всегда перпендикулярны линиям уровня и указывают в сторону &#39;подъема&#39; на гору.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c62e4bc255ee060a3ad8da787bd5fddd45c4608fde466a6562b77e42b31e0d40.png" src="../../_images/c62e4bc255ee060a3ad8da787bd5fddd45c4608fde466a6562b77e42b31e0d40.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>На 2D-графике видно, что красные стрелки (градиент) всегда перпендикулярны линиям уровня и указывают в сторону &#39;подъема&#39; на гору.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>Аппроксимация рядами Тейлора<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>Это невероятно мощная идея. <strong>Ряд Тейлора</strong> позволяет нам приблизить (аппроксимировать) любую сложную, “страшную” функцию в окрестности некоторой точки с помощью простого полинома (суммы степенных функций).</p>
+<p>Зачем это нужно? Работать с полиномами гораздо проще, чем со сложными функциями (вроде <span class="math notranslate nohighlight">\(\sin(x)\)</span> или <span class="math notranslate nohighlight">\(\log(x)\)</span>). Мы можем легко находить их производные и интегралы.</p>
+<p><strong>Основная идея:</strong> Если мы знаем значение функции <span class="math notranslate nohighlight">\(f(a)\)</span> в точке <span class="math notranslate nohighlight">\(a\)</span>, а также значения всех ее производных в этой же точке (<span class="math notranslate nohighlight">\(f'(a)\)</span>, <span class="math notranslate nohighlight">\(f''(a)\)</span> и т.д.), мы можем построить полином, который будет вести себя <em>очень похоже</em> на нашу функцию рядом с точкой <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<p>Формула выглядит так:</p>
+<p><span class="math notranslate nohighlight">\(
+f(x) \approx f(a) + \frac{f'(a)}{1!}(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \frac{f'''(a)}{3!}(x-a)^3 + \dots
+\)</span></p>
+<p>Чем больше членов ряда (производных) мы берем, тем точнее наше приближение. Это фундаментальный инструмент, который используется повсюду, от калькуляторов (как они считают синусы) до сложных физических и экономических моделей.</p>
+<p>Давайте аппроксимируем функцию <span class="math notranslate nohighlight">\(f(x) = \cos(x)\)</span> в окрестности точки <span class="math notranslate nohighlight">\(a=0\)</span>.
+Ее ряд Тейлора (Маклорена) выглядит так:</p>
+<p><span class="math notranslate nohighlight">\(
+\cos(x) \approx 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \dots
+\)</span></p>
+<p>Посмотрим, как полиномы разной степени приближают косинус.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Приближения Тейлора</span>
+<span class="n">y_t1</span> <span class="o">=</span> <span class="mi">1</span>                                      <span class="c1"># 0-й порядок</span>
+<span class="n">y_t2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>                           <span class="c1"># 2-й порядок</span>
+<span class="n">y_t3</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">24</span>               <span class="c1"># 4-й порядок</span>
+<span class="n">y_t4</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">24</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">6</span> <span class="o">/</span> <span class="mi">720</span>  <span class="c1"># 6-й порядок</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_cos</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">cos(x)$ (точная функция)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_t1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1 (Порядок 0)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_t2</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$1 - x^2/2!$ (Порядок 2)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_t3</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$1 - x^2/2! + x^4/4!$ (Порядок 4)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_t4</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$1 - x^2/2! + x^4/4! - x^6/6!$ (Порядок 6)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Аппроксимация $</span><span class="se">\\</span><span class="s1">cos(x)$ рядами Тейлора около $x=0$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Видно, что чем больше членов ряда мы добавляем, тем на большем промежутке полином совпадает с исходной функцией.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ca7e0e2cd02073da90438208dc80d2d2a2ab963917e0adef8db3d3c933e91b44.png" src="../../_images/ca7e0e2cd02073da90438208dc80d2d2a2ab963917e0adef8db3d3c933e91b44.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Видно, что чем больше членов ряда мы добавляем, тем на большем промежутке полином совпадает с исходной функцией.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>Тригонометрические функции и периодичность<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>Функции <span class="math notranslate nohighlight">\(\sin(x)\)</span>, <span class="math notranslate nohighlight">\(\cos(x)\)</span>, <span class="math notranslate nohighlight">\(\tan(x)\)</span> и другие описывают соотношения сторон в прямоугольном треугольнике. Но их истинная сила в другом: они <strong>периодические</strong>.</p>
+<p>Именно это свойство делает их незаменимыми для моделирования любых процессов, которые повторяются во времени:</p>
+<ul class="simple">
+<li><p>Колебания маятника</p></li>
+<li><p>Звуковые волны</p></li>
+<li><p>Сезонные продажи в бизнесе</p></li>
+<li><p>Электрические сигналы</p></li>
+</ul>
+<p>Любой сложный периодический сигнал можно разложить на сумму простых синусов и косинусов. Этот процесс называется <strong>преобразованием Фурье</strong> и является основой всей цифровой обработки сигналов. Когда вы слушаете MP3 или смотрите JPEG, вы пользуетесь результатами работы этих функций.</p>
+<p>Давайте создадим сложный сигнал, сложив две синусоиды с разной частотой и амплитудой, а затем посмотрим на результат.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Временная шкала</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Компонент 1: Низкочастотный сигнал</span>
+<span class="n">freq1</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># 1 Гц</span>
+<span class="n">amp1</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">signal1</span> <span class="o">=</span> <span class="n">amp1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq1</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Компонент 2: Высокочастотный сигнал с меньшей амплитудой</span>
+<span class="n">freq2</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># 10 Гц</span>
+<span class="n">amp2</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">signal2</span> <span class="o">=</span> <span class="n">amp2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Итоговый сложный сигнал</span>
+<span class="n">complex_signal</span> <span class="o">=</span> <span class="n">signal1</span> <span class="o">+</span> <span class="n">signal2</span>
+
+<span class="c1"># Визуализация</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">signal1</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Сигнал 1 (основной тон)&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Амплитуда&#39;</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">signal2</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Сигнал 2 (высокочастотная помеха/деталь)&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Амплитуда&#39;</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">complex_signal</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Итоговый сложный сигнал&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Время (с)&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Амплитуда&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Этот пример иллюстрирует, как сложные периодические процессы могут быть разложены на простые синусоидальные компоненты.</span>
+<span class="s2">Преобразование Фурье делает обратную операцию — находит эти компоненты в сложном сигнале.&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/da4c2dd22632c37a5eb0a8cb6ade5f1f6b8b2303f8fc713545391fe9ea0b4cee.png" src="../../_images/da4c2dd22632c37a5eb0a8cb6ade5f1f6b8b2303f8fc713545391fe9ea0b4cee.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Этот пример иллюстрирует, как сложные периодические процессы могут быть разложены на простые синусоидальные компоненты.
+Преобразование Фурье делает обратную операцию — находит эти компоненты в сложном сигнале.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -471,6 +666,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Функции многих переменных и Градиент</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Аппроксимация рядами Тейлора</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Тригонометрические функции и периодичность</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

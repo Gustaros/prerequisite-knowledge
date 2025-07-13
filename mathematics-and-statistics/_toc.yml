@@ -14,7 +14,7 @@ parts:
     - file: foundations/calculus/intro
       sections:
       - file: foundations/calculus/basics.ipynb
-      - file: foundations/calculus/advanced
+      - file: foundations/calculus/advanced.ipynb
 
   - caption: Вероятностные и численные методы
     chapters:
