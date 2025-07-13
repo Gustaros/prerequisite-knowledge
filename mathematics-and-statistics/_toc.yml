@@ -2,8 +2,24 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
-chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+root: intro  
+parts:
+  - caption: Базовые компетенции
+    chapters:
+    - file: part-1/basic-mathematics
+    - file: part-1/matrix-algebra
+    - file: part-1/calculus
+    - file: part-1/probability-and-statistics
+    - file: part-1/numerical-analysis
+
+  - caption: Продвинутые компетенции
+    chapters:
+    - file: part-2/matrix-algebra
+    - file: part-2/calculus
+    - file: part-2/probability-and-statistics
+    - file: part-2/differential-equations
+    - file: part-2/numerical-analysis
+
+  - caption: Дополнительные материалы
+    chapters:
+    - file: references
