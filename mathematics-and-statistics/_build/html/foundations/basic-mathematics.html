@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'foundations/basic-mathematics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -383,7 +385,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -399,6 +403,22 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o1">Инструмент №1: Сумма</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o2">Инструмент №2: Произведение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o3">Инструмент №3: Модуль</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o4">Инструмент №4: Множества</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cup">1. Объединить (<span class="math notranslate nohighlight">\(\cup\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cap">2. Найти общее (<span class="math notranslate nohighlight">\(\cap\)</span>)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o5">Инструмент №5: Факториал</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -410,11 +430,82 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Базовая математика<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Давайте разберемся с самыми основами. Ничего страшного здесь нет, это просто набор удобных инструментов.</p>
+<section id="o1">
+<h2>Инструмент №1: Сумма<a class="headerlink" href="#o1" title="Link to this heading">#</a></h2>
+<p>Представьте, что вам нужно сложить числа от 1 до 5: <span class="math notranslate nohighlight">\(1 + 2 + 3 + 4 + 5\)</span>. Писать не очень долго. А если нужно сложить числа от 1 до 100?</p>
+<p>Математики придумали для этого специальный значок: <span class="math notranslate nohighlight">\(\sum\)</span> (называется “сигма”).</p>
+<p><strong>Думайте о <span class="math notranslate nohighlight">\(\sum\)</span> как о кнопке “Посчитать сумму”.</strong></p>
+<p>Как она работает:
+$<span class="math notranslate nohighlight">\(
+\sum_{i=1}^{5} i
+\)</span>$</p>
+<p>Это читается очень просто: “Возьми все числа от 1 до 5 и сложи их”.</p>
 <ul class="simple">
-<li><p>Основная математическая нотация (знак суммы, произведения, греческие символы, …)</p></li>
-<li><p>Абсолютная величина (модуль), операции над множествами (объединение, пересечение, подмножества, …), факториал</p></li>
-<li><p>Последовательности и ряды</p></li>
+<li><p><span class="math notranslate nohighlight">\(i=1\)</span> внизу говорит, с какого числа <strong>начинать</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(5\)</span> наверху говорит, на каком числе <strong>закончить</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(i\)</span> справа — это само число, которое мы берем на каждом шаге.</p></li>
 </ul>
+<p>Результат:
+$<span class="math notranslate nohighlight">\(
+\sum_{i=1}^{5} i = 1 + 2 + 3 + 4 + 5 = 15
+\)</span>$</p>
+</section>
+<section id="o2">
+<h2>Инструмент №2: Произведение<a class="headerlink" href="#o2" title="Link to this heading">#</a></h2>
+<p>Это брат знака суммы, но он не складывает, а <strong>умножает</strong>. Обозначается символом <span class="math notranslate nohighlight">\(\prod\)</span> (называется “пи”).</p>
+<div class="math notranslate nohighlight">
+\[
+\prod_{i=1}^{4} i
+\]</div>
+<p>Это означает: “Возьми все числа от 1 до 4 и перемножь их”.</p>
+<p>Результат:
+$<span class="math notranslate nohighlight">\(
+\prod_{i=1}^{4} i = 1 \times 2 \times 3 \times 4 = 24
+\)</span>$</p>
+</section>
+<section id="o3">
+<h2>Инструмент №3: Модуль<a class="headerlink" href="#o3" title="Link to this heading">#</a></h2>
+<p>Этот инструмент называется <strong>модуль</strong> или <strong>абсолютная величина</strong>. Он отвечает на один простой вопрос: “Как далеко число находится от нуля?” Обозначается как <span class="math notranslate nohighlight">\(|x|\)</span>.</p>
+<p>Представьте числовую прямую. Расстояние не может быть отрицательным, верно?</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(|5|\)</span> — “Как далеко 5 от 0?” Ответ: на 5 шагов. → <span class="math notranslate nohighlight">\(|5| = 5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|-5|\)</span> — “Как далеко -5 от 0?” Ответ: тоже на 5 шагов! → <span class="math notranslate nohighlight">\(|-5| = 5\)</span></p></li>
+</ul>
+<p><strong>Простое правило: модуль “убирает” знак минуса.</strong> Вот и всё.</p>
+</section>
+<section id="o4">
+<h2>Инструмент №4: Множества<a class="headerlink" href="#o4" title="Link to this heading">#</a></h2>
+<p>Представьте, что <strong>множество</strong> — это плейлист в вашем телефоне, где каждая песня уникальна.</p>
+<p>У вас есть два плейлиста:</p>
+<ul class="simple">
+<li><p>Плейлист A: <span class="math notranslate nohighlight">\(\{Queen, AC/DC\}\)</span></p></li>
+<li><p>Плейлист B: <span class="math notranslate nohighlight">\(\{AC/DC, Nirvana\}\)</span></p></li>
+</ul>
+<p>Что с ними можно сделать?</p>
+<section id="cup">
+<h3>1. Объединить (<span class="math notranslate nohighlight">\(\cup\)</span>)<a class="headerlink" href="#cup" title="Link to this heading">#</a></h3>
+<p>Это как создать новый плейлист, скинув в него все песни из обоих. Если песня повторяется, мы добавляем её только один раз.
+<span class="math notranslate nohighlight">\(A \cup B = \{Queen, AC/DC, Nirvana\}\)</span></p>
+</section>
+<section id="cap">
+<h3>2. Найти общее (<span class="math notranslate nohighlight">\(\cap\)</span>)<a class="headerlink" href="#cap" title="Link to this heading">#</a></h3>
+<p>Это как найти песни, которые есть в <em>обоих</em> плейлистах одновременно.
+<span class="math notranslate nohighlight">\(A \cap B = \{AC/DC\}\)</span></p>
+</section>
+</section>
+<section id="o5">
+<h2>Инструмент №5: Факториал<a class="headerlink" href="#o5" title="Link to this heading">#</a></h2>
+<p>Этот инструмент называется <strong>факториал</strong> и обозначается восклицательным знаком. Он помогает посчитать, сколькими способами можно расставить несколько предметов в ряд.</p>
+<p>Представьте, что у вас 3 друга: Аня (А), Вася (В) и Катя (К). Сколькими способами их можно поставить в очередь за билетами?</p>
+<p>Чтобы найти общее число вариантов, мы перемножаем: <span class="math notranslate nohighlight">\(3 \times 2 \times 1 = 6\)</span>.</p>
+<p>Запись <span class="math notranslate nohighlight">\(3!\)</span> — это просто короткий способ сказать “сделай вот это: <span class="math notranslate nohighlight">\(3 \times 2 \times 1\)</span>”.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(4! = 4 \times 3 \times 2 \times 1 = 24\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(5! = 5 \times 4 \times 3 \times 2 \times 1 = 120\)</span></p></li>
+</ul>
+<p>По определению, факториал нуля равен единице: <span class="math notranslate nohighlight">\(0! = 1\)</span>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -471,6 +562,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o1">Инструмент №1: Сумма</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o2">Инструмент №2: Произведение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o3">Инструмент №3: Модуль</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o4">Инструмент №4: Множества</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cup">1. Объединить (<span class="math notranslate nohighlight">\(\cup\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cap">2. Найти общее (<span class="math notranslate nohighlight">\(\cap\)</span>)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o5">Инструмент №5: Факториал</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
