@@ -13,7 +13,7 @@ parts:
       - file: foundations/matrix-algebra/advanced
     - file: foundations/calculus/intro
       sections:
-      - file: foundations/calculus/basics
+      - file: foundations/calculus/basics.ipynb
       - file: foundations/calculus/advanced
 
   - caption: Вероятностные и численные методы

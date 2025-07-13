@@ -314,7 +314,7 @@
       
       
       
-      <li><a href="../../_sources/foundations/calculus/basics.md" target="_blank"
+      <li><a href="../../_sources/foundations/calculus/basics.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -324,7 +324,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -434,6 +434,60 @@ document.write(`
 <li><p><strong>Экспоненциальная:</strong> <span class="math notranslate nohighlight">\(y = e^x\)</span> или <span class="math notranslate nohighlight">\(y = 2^x\)</span>. Характеризует очень быстрый, взрывной рост (или затухание, если степень отрицательная). Классический пример — рост популяции бактерий или сложный процент в банке. Число <span class="math notranslate nohighlight">\(e \approx 2.718\)</span> — это особенная, “естественная” константа для такого роста.</p></li>
 <li><p><strong>Логарифмическая:</strong> <span class="math notranslate nohighlight">\(y = \log(x)\)</span>. Это операция, обратная экспоненте. Если экспонента отвечает на вопрос “что будет, если возвести 2 в степень 5?”, то логарифм отвечает на вопрос “в какую степень нужно возвести 2, чтобы получить 32?”. Логарифмы “замедляют” очень быстрый рост.</p></li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Настроим красивые графики</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+
+<span class="c1"># Определим диапазон для x</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+<span class="c1"># Полиномиальная функция</span>
+<span class="k">def</span> <span class="nf">polynomial</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c1"># Экспоненциальная функция</span>
+<span class="k">def</span> <span class="nf">exponential</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Логарифмическая функция (для x &gt; 0)</span>
+<span class="n">x_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">logarithmic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Визуализация</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polynomial</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Полином: $y = x^3 - 2x^2 - 3x + 1$&#39;</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">exponential</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Экспонента: $y = e^x$&#39;</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_log</span><span class="p">,</span> <span class="n">logarithmic</span><span class="p">(</span><span class="n">x_log</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Логарифм: $y = \log(x)$&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axs</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:33: SyntaxWarning: invalid escape sequence &#39;\l&#39;
+&lt;&gt;:33: SyntaxWarning: invalid escape sequence &#39;\l&#39;
+C:\Temp\ipykernel_908\553382820.py:33: SyntaxWarning: invalid escape sequence &#39;\l&#39;
+  axs[2].set_title(&#39;Логарифм: $y = \log(x)$&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/0c25687b0eb325d599b81018a5750b0c9d5f4c38076af157b06574688a3be136.png" src="../../_images/0c25687b0eb325d599b81018a5750b0c9d5f4c38076af157b06574688a3be136.png" />
+</div>
+</div>
 </section>
 <section id="limits">
 <h2>Пределы (Limits)<a class="headerlink" href="#limits" title="Link to this heading">#</a></h2>
@@ -446,6 +500,47 @@ document.write(`
 \lim_{x \to c} f(x) = L
 \)</span></p>
 <p>“Предел функции <span class="math notranslate nohighlight">\(f(x)\)</span> при <span class="math notranslate nohighlight">\(x\)</span>, стремящемся к <span class="math notranslate nohighlight">\(c\)</span>, равен <span class="math notranslate nohighlight">\(L\)</span>”.</p>
+<p>Давайте посмотрим на функцию <span class="math notranslate nohighlight">\(f(x) = \frac{\sin(x)}{x}\)</span>. Эта функция не определена в точке <span class="math notranslate nohighlight">\(x=0\)</span> (делить на ноль нельзя). Но к чему она стремится, когда <span class="math notranslate nohighlight">\(x\)</span> очень близок к нулю?
+$<span class="math notranslate nohighlight">\(
+\lim_{x \to 0} \frac{\sin(x)}{x} = ?
+\)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sin_x_over_x</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># Добавляем маленькое число, чтобы избежать деления на ноль при визуализации</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1e-9</span><span class="p">)</span>
+
+<span class="n">x_lim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">y_lim</span> <span class="o">=</span> <span class="n">sin_x_over_x</span><span class="p">(</span><span class="n">x_lim</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_lim</span><span class="p">,</span> <span class="n">y_lim</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;График функции $f(x) = </span><span class="se">\\</span><span class="s1">frac{</span><span class="se">\\</span><span class="s1">sin(x)}</span><span class="si">{x}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Укажем на точку, к которой стремится функция</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span> <span class="c1"># Красная точка в (0, 1)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;Функция стремится к y=1&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.05</span><span class="p">),</span>
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Значение функции в x=0.01: </span><span class="si">{</span><span class="n">sin_x_over_x</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Значение функции в x=-0.01: </span><span class="si">{</span><span class="n">sin_x_over_x</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c2be4c852894c3742da0c8970ba55ea86da87b23255be5ef1ca6d3ad918b38f1.png" src="../../_images/c2be4c852894c3742da0c8970ba55ea86da87b23255be5ef1ca6d3ad918b38f1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Значение функции в x=0.01: 1.0000
+Значение функции в x=-0.01: 1.0000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Как видно из графика и расчетов, хотя в точке <span class="math notranslate nohighlight">\(x=0\)</span> функция не существует, с обеих сторон она стремится к значению <span class="math notranslate nohighlight">\(y=1\)</span>. Это и есть её предел.</p>
 </section>
 <section id="differentiation">
 <h2>Производная (Differentiation)<a class="headerlink" href="#differentiation" title="Link to this heading">#</a></h2>
@@ -460,6 +555,50 @@ document.write(`
 <li><p><strong>Производная</strong> — это показание вашего спидометра в конкретный момент времени.</p></li>
 </ul>
 <p>Если производная большая и положительная — вы быстро едете вперед. Если она равна нулю — вы стоите на месте. Если она отрицательная — вы едете назад.</p>
+<p>Давайте визуализируем это для функции <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>. Ее производная равна <span class="math notranslate nohighlight">\(f'(x) = 2x\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">f_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="c1"># Производная</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Точка, в которой мы ищем производную</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="n">f_prime</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="c1"># Наклон касательной</span>
+
+<span class="c1"># Уравнение касательной: y = slope * (x - x0) + y0</span>
+<span class="n">tangent_line</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">y0</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Функция $f(x) = x^2$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tangent_line</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Касательная в x=</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># Точка касания</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Производная как наклон касательной&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;В точке x = </span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s2">, наклон (производная) равен </span><span class="si">{</span><span class="n">slope</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;График касательной идет вниз, производная отрицательная.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/04c68f77ee55ad0474f0a41dd1d97c3a61a3225f897fe1b49124964759eb86ad.png" src="../../_images/04c68f77ee55ad0474f0a41dd1d97c3a61a3225f897fe1b49124964759eb86ad.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>В точке x = -1, наклон (производная) равен -2.
+График касательной идет вниз, производная отрицательная.
+</pre></div>
+</div>
+</div>
+</div>
 <p>В машинном обучении производная (а точнее, <strong>градиент</strong> — ее многомерный аналог) говорит нам, в какую сторону нужно “сдвинуть” параметры модели, чтобы она стала лучше (то есть, чтобы ошибка стала меньше). Мы буквально “спускаемся” по графику функции ошибки в сторону самого крутого склона, и производная указывает нам это направление.</p>
 <p>Обозначается как</p>
 <p><span class="math notranslate nohighlight">\(f'(x)\)</span>, <span class="math notranslate nohighlight">\(\frac{dy}{dx}\)</span>
@@ -477,6 +616,43 @@ document.write(`
 <li><p><strong>Интеграл</strong> — это общее расстояние, которое вы проехали за определенный промежуток времени.</p></li>
 </ul>
 <p>Чтобы найти общее расстояние, мы как бы суммируем все крошечные расстояния, которые проезжали в каждый бесконечно малый момент времени. Интеграл — это и есть такое “бесконечное” суммирование.</p>
+<p>Если производная — это про скорость, то интеграл — про пройденный путь. Давайте посчитаем площадь под кривой <span class="math notranslate nohighlight">\(y = x^2\)</span> на отрезке от <span class="math notranslate nohighlight">\(x=0\)</span> до <span class="math notranslate nohighlight">\(x=2\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{0}^{2} x^2 dx
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Определяем участок для закрашивания</span>
+<span class="n">x_fill</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_fill</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x_fill</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Функция $f(x) = x^2$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_fill</span><span class="p">,</span> <span class="n">y_fill</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Площадь под кривой от 0 до 2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Интеграл как площадь под графиком&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Аналитическое решение: integral(x^2) = x^3 / 3</span>
+<span class="c1"># Area = F(2) - F(0) = (2^3 / 3) - (0^3 / 3) = 8/3</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Точное значение площади (интеграла) равно 8/3 ≈ </span><span class="si">{</span><span class="mi">8</span><span class="o">/</span><span class="mi">3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/203a8b1fbbcc8cdbea4c6355ce1b72b9faf1845d12f48464aa4706d65c554856.png" src="../../_images/203a8b1fbbcc8cdbea4c6355ce1b72b9faf1845d12f48464aa4706d65c554856.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Точное значение площади (интеграла) равно 8/3 ≈ 2.6667
+</pre></div>
+</div>
+</div>
+</div>
 <p>В теории вероятностей интеграл от функции плотности распределения позволяет нам найти вероятность того, что случайная величина попадет в определенный интервал.</p>
 <p>Обозначается как <span class="math notranslate nohighlight">\(\int f(x) dx\)</span>. Если мы считаем площадь на конкретном отрезке от <span class="math notranslate nohighlight">\(a\)</span> до <span class="math notranslate nohighlight">\(b\)</span>, это называется <strong>определенным интегралом</strong>:</p>
 <p><span class="math notranslate nohighlight">\(
