@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'foundations/matrix-algebra/basics';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -383,7 +385,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -399,6 +403,22 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Векторные и матричные операции</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сложение и вычитание (поэлементно)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Умножение на число (скаляр)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Умножение матрицы на матрицу (“строка на столбец”)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Решение систем линейных уравнений (СЛАУ)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-1">Обратная матрица (<span class="math notranslate nohighlight">\(A^{-1}\)</span>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Собственные векторы и собственные значения</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -408,14 +428,127 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="id1">
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Основные концепции<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Давайте начнем с фундаментальных операций. Это как учиться сложению и вычитанию, прежде чем переходить к умножению и делению.</p>
+<section id="id2">
+<h2>Векторные и матричные операции<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Сложение и вычитание (поэлементно)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Это самая простая операция. Чтобы сложить (или вычесть) два вектора или две матрицы, они должны быть <strong>одинакового размера</strong>. Мы просто берем и складываем (или вычитаем) элементы на одинаковых позициях.</p>
+<p><strong>Пример с векторами:</strong>
+Представьте, что у вас есть два списка покупок.
+Вектор А (что нужно купить): {2 яблока, 1 апельсин}
+Вектор B (что докупить): {1 яблоко, 3 апельсина}</p>
+<p><span class="math notranslate nohighlight">\(
+\begin{pmatrix} 2 \\ 1 \end{pmatrix} + \begin{pmatrix} 1 \\ 3 \end{pmatrix} = \begin{pmatrix} 2+1 \\ 1+3 \end{pmatrix} = \begin{pmatrix} 3 \\ 4 \end{pmatrix}
+\)</span></p>
+<p>Итоговый список: {3 яблока, 4 апельсина}. С матрицами всё абсолютно так же.</p>
+</section>
+<section id="id4">
+<h3>Умножение на число (скаляр)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>Что если мы хотим удвоить наш список покупок? Нужно просто умножить каждый элемент на 2.</p>
+<p><span class="math notranslate nohighlight">\(
+2 \times \begin{pmatrix} 3 \\ 4 \end{pmatrix} = \begin{pmatrix} 2 \times 3 \\ 2 \times 4 \end{pmatrix} = \begin{pmatrix} 6 \\ 8 \end{pmatrix}
+\)</span></p>
+<p>Это называется умножением на <strong>скаляр</strong> (скаляр — это просто обычное одиночное число).</p>
+</section>
+<section id="id5">
+<h3>Умножение матрицы на матрицу (“строка на столбец”)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>А вот здесь начинается самое интересное и важное. <strong>Матрицы перемножаются НЕ поэлементно!</strong></p>
+<p>Правило такое: чтобы найти элемент в результирующей матрице, мы берем <strong>строку</strong> из первой матрицы и <strong>столбец</strong> из второй, поэлементно их перемножаем и результат складываем.</p>
+<p><strong>Важное условие:</strong> Количество столбцов в первой матрице должно быть равно количеству строк во второй.</p>
+<p><strong>Пример:</strong>
+Допустим, у нас есть цены на фрукты (вектор-строка) и количество фруктов в двух корзинах (матрица). Мы хотим узнать общую стоимость каждой корзины.</p>
+<p>Цены: (3<span class="math notranslate nohighlight">\( за яблоко, 2\)</span> за апельсин)
+Корзины:</p>
 <ul class="simple">
-<li><p>Векторные и матричные операции (сложение, умножение, …)</p></li>
-<li><p>Решение систем линейных уравнений</p></li>
-<li><p>Обратная матрица</p></li>
-<li><p>Собственные векторы и собственные значения</p></li>
+<li><p>Корзина 1: {5 яблок, 4 апельсина}</p></li>
+<li><p>Корзина 2: {2 яблока, 7 апельсинов}</p></li>
 </ul>
+<p>Запишем это в виде матриц:
+<span class="math notranslate nohighlight">\(
+\begin{pmatrix} 3 &amp; 2 \end{pmatrix} \times \begin{pmatrix} 5 &amp; 2 \\ 4 &amp; 7 \end{pmatrix}
+\)</span></p>
+<p>Считаем:</p>
+<ol class="arabic simple">
+<li><p><strong>Стоимость Корзины 1:</strong> (1-я строка) × (1-й столбец)
+<span class="math notranslate nohighlight">\((3 \times 5) + (2 \times 4) = 15 + 8 = 23\)</span></p></li>
+<li><p><strong>Стоимость Корзины 2:</strong> (1-я строка) × (2-й столбец)
+<span class="math notranslate nohighlight">\((3 \times 2) + (2 \times 7) = 6 + 14 = 20\)</span></p></li>
+</ol>
+<p>Результат — вектор (матрица) стоимостей:
+<span class="math notranslate nohighlight">\(
+\begin{pmatrix} 23 &amp; 20 \end{pmatrix}
+\)</span></p>
+</section>
+</section>
+<section id="id6">
+<h2>Решение систем линейных уравнений (СЛАУ)<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>Матрицы — это невероятно удобный способ для записи и решения систем уравнений.</p>
+<p>Представьте систему:
+<span class="math notranslate nohighlight">\(
+\begin{cases}
+2x + 3y = 8 \\
+4x - y = 2
+\end{cases}
+\)</span></p>
+<p>Ее можно переписать в матричном виде <span class="math notranslate nohighlight">\(A \cdot \mathbf{x} = \mathbf{b}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\underbrace{
+\begin{pmatrix} 2 &amp; 3 \\ 4 &amp; -1 \end{pmatrix}
+}_\text{A}
+\cdot
+\underbrace{
+\begin{pmatrix} x \\ y \end{pmatrix}
+}_\text{x}
+=
+\underbrace{
+\begin{pmatrix} 8 \\ 2 \end{pmatrix}
+}_\text{b}
+\end{split}\]</div>
+<p>Здесь <span class="math notranslate nohighlight">\(A\)</span> — это матрица коэффициентов, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> — вектор неизвестных, а <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> — вектор свободных членов. Решить эту систему — значит найти такой вектор <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, который удовлетворяет этому равенству.</p>
+</section>
+<section id="a-1">
+<h2>Обратная матрица (<span class="math notranslate nohighlight">\(A^{-1}\)</span>)<a class="headerlink" href="#a-1" title="Link to this heading">#</a></h2>
+<p>В обычной алгебре, чтобы решить уравнение <span class="math notranslate nohighlight">\(5x = 10\)</span>, мы делим обе части на 5. То есть, умножаем на <span class="math notranslate nohighlight">\(5^{-1}\)</span> (это <span class="math notranslate nohighlight">\(1/5\)</span>).</p>
+<p>В матричной алгебре “деления” нет. Его роль выполняет умножение на <strong>обратную матрицу</strong>, которая обозначается как <span class="math notranslate nohighlight">\(A^{-1}\)</span>.</p>
+<p><strong>Ключевое свойство:</strong> Матрица, умноженная на свою обратную, дает <strong>единичную матрицу</strong> <span class="math notranslate nohighlight">\(I\)</span> (аналог единицы в обычной алгебре — матрица с единицами на диагонали и нулями в остальных местах).</p>
+<p><span class="math notranslate nohighlight">\(
+A \cdot A^{-1} = A^{-1} \cdot A = I = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}
+\)</span></p>
+<p>Как это помогает решить нашу систему <span class="math notranslate nohighlight">\(A \cdot \mathbf{x} = \mathbf{b}\)</span>?
+Просто умножим обе части уравнения <strong>слева</strong> на <span class="math notranslate nohighlight">\(A^{-1}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(
+\underbrace{A^{-1} \cdot A}_{I} \cdot \mathbf{x} = A^{-1} \cdot \mathbf{b}
+\)</span>
+<span class="math notranslate nohighlight">\(
+I \cdot \mathbf{x} = A^{-1} \cdot \mathbf{b}
+\)</span>
+<span class="math notranslate nohighlight">\(
+\mathbf{x} = A^{-1} \cdot \mathbf{b}
+\)</span>
+Теперь, если мы найдем обратную матрицу <span class="math notranslate nohighlight">\(A^{-1}\)</span>, то для нахождения <span class="math notranslate nohighlight">\(x\)</span> и <span class="math notranslate nohighlight">\(y\)</span> нам останется просто перемножить две матрицы!</p>
+<p><strong>Важно:</strong> Обратная матрица существует не всегда!</p>
+</section>
+<section id="id7">
+<h2>Собственные векторы и собственные значения<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>Это, пожалуй, самая абстрактная, но и одна из самых мощных концепций.</p>
+<p>Представьте, что матрица <span class="math notranslate nohighlight">\(A\)</span> — это некое преобразование в пространстве (например, поворот, растяжение, сжатие).</p>
+<p><strong>Собственный вектор</strong> матрицы <span class="math notranslate nohighlight">\(A\)</span> — это такой особенный, “непоколебимый” вектор, который после умножения на матрицу <span class="math notranslate nohighlight">\(A\)</span> <strong>не меняет своего направления</strong>, а только растягивается или сжимается.</p>
+<p><strong>Собственное значение</strong> (<span class="math notranslate nohighlight">\(\lambda\)</span>) — это как раз тот самый коэффициент, на который этот вектор растянулся или сжался.</p>
+<p>Формально это записывается так:
+<span class="math notranslate nohighlight">\(
+A \mathbf{v} = \lambda \mathbf{v}
+\)</span></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span> — наша матрица-преобразование</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{v}\)</span> — её собственный вектор</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda\)</span> — её собственное значение</p></li>
+</ul>
+<p>Зачем это нужно? Собственные векторы и значения показывают “главные оси” или “основные направления” преобразования. Это фундаментальная идея для таких методов, как Метод Главных Компонент (PCA) в анализе данных, который ищет самые важные направления в данных.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -472,6 +605,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Векторные и матричные операции</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сложение и вычитание (поэлементно)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Умножение на число (скаляр)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Умножение матрицы на матрицу (“строка на столбец”)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Решение систем линейных уравнений (СЛАУ)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-1">Обратная матрица (<span class="math notranslate nohighlight">\(A^{-1}\)</span>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Собственные векторы и собственные значения</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
