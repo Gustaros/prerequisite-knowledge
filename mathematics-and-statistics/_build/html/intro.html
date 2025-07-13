@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Базовая математика" href="part-1/basic-mathematics.html" />
+    <link rel="next" title="Базовая математика" href="foundations/basic-mathematics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,23 +180,36 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Базовые компетенции</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Математический фундамент</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="part-1/basic-mathematics.html">Базовая математика</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/matrix-algebra.html">Матричная алгебра (Основы)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/calculus.html">Математический анализ (Основы)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/probability-and-statistics.html">Теория вероятностей и Статистика (Основы)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/numerical-analysis.html">Численный анализ (Основы)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations/basic-mathematics.html">Базовая математика</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="foundations/matrix-algebra/intro.html">Матричная алгебра</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations/matrix-algebra/basics.html">Основные концепции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations/matrix-algebra/advanced.html">Продвинутые темы</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Продвинутые компетенции</span></p>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="foundations/calculus/intro.html">Математический анализ</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations/calculus/basics.html">Основные концепции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations/calculus/advanced.html">Продвинутые темы</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Вероятностные и численные методы</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="part-2/matrix-algebra.html">Матричная алгебра (Продвинутый уровень)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/calculus.html">Математический анализ (Продвинутый уровень)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/probability-and-statistics.html">Теория вероятностей и Статистика (Продвинутый уровень)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/differential-equations.html">Дифференциальные уравнения</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/numerical-analysis.html">Численный анализ (Продвинутый уровень)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="methods/probability-and-statistics/intro.html">Теория вероятностей и Статистика</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="methods/probability-and-statistics/probability-theory.html">Теория вероятностей</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods/probability-and-statistics/statistics.html">Математическая статистика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods/probability-and-statistics/advanced.html">Продвинутые темы</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Дополнительные материалы</span></p>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="methods/numerical-analysis/intro.html">Численные методы</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="methods/numerical-analysis/optimization.html">Методы оптимизации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods/numerical-analysis/integration-interpolation.html">Интегрирование и интерполяция</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/differential-equations.html">Дифференциальные уравнения</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Дополнительно</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="references.html">Полезные ссылки</a></li>
 </ul>
@@ -402,27 +415,23 @@ document.write(`
 <p>Материал структурирован от базовых компетенций, таких как основы математики и линейная алгебра, до более продвинутых тем, включая численные методы и дифференциальные уравнения.</p>
 <p>Ниже представлено полное оглавление для навигации по сайту.</p>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Базовые компетенции</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Математический фундамент</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="part-1/basic-mathematics.html">Базовая математика</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/matrix-algebra.html">Матричная алгебра (Основы)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/calculus.html">Математический анализ (Основы)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/probability-and-statistics.html">Теория вероятностей и Статистика (Основы)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-1/numerical-analysis.html">Численный анализ (Основы)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations/basic-mathematics.html">Базовая математика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations/matrix-algebra/intro.html">Матричная алгебра</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations/calculus/intro.html">Математический анализ</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Продвинутые компетенции</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Вероятностные и численные методы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="part-2/matrix-algebra.html">Матричная алгебра (Продвинутый уровень)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/calculus.html">Математический анализ (Продвинутый уровень)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/probability-and-statistics.html">Теория вероятностей и Статистика (Продвинутый уровень)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/differential-equations.html">Дифференциальные уравнения</a></li>
-<li class="toctree-l1"><a class="reference internal" href="part-2/numerical-analysis.html">Численный анализ (Продвинутый уровень)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/probability-and-statistics/intro.html">Теория вероятностей и Статистика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/numerical-analysis/intro.html">Численные методы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/differential-equations.html">Дифференциальные уравнения</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Дополнительные материалы</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Дополнительно</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="references.html">Полезные ссылки</a></li>
 </ul>
@@ -460,7 +469,7 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="right-next"
-       href="part-1/basic-mathematics.html"
+       href="foundations/basic-mathematics.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

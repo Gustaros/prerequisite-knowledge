@@ -2,24 +2,33 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro  
+root: intro
 parts:
-  - caption: Базовые компетенции
+  - caption: Математический фундамент
     chapters:
-    - file: part-1/basic-mathematics
-    - file: part-1/matrix-algebra
-    - file: part-1/calculus
-    - file: part-1/probability-and-statistics
-    - file: part-1/numerical-analysis
+    - file: foundations/basic-mathematics
+    - file: foundations/matrix-algebra/intro
+      sections:
+      - file: foundations/matrix-algebra/basics
+      - file: foundations/matrix-algebra/advanced
+    - file: foundations/calculus/intro
+      sections:
+      - file: foundations/calculus/basics
+      - file: foundations/calculus/advanced
 
-  - caption: Продвинутые компетенции
+  - caption: Вероятностные и численные методы
     chapters:
-    - file: part-2/matrix-algebra
-    - file: part-2/calculus
-    - file: part-2/probability-and-statistics
-    - file: part-2/differential-equations
-    - file: part-2/numerical-analysis
+    - file: methods/probability-and-statistics/intro
+      sections:
+      - file: methods/probability-and-statistics/probability-theory
+      - file: methods/probability-and-statistics/statistics
+      - file: methods/probability-and-statistics/advanced
+    - file: methods/numerical-analysis/intro
+      sections:
+      - file: methods/numerical-analysis/optimization
+      - file: methods/numerical-analysis/integration-interpolation
+    - file: methods/differential-equations
 
-  - caption: Дополнительные материалы
+  - caption: Дополнительно
     chapters:
     - file: references
