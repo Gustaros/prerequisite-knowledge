@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'methods/probability-and-statistics/probability-theory';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -312,7 +314,7 @@
       
       
       
-      <li><a href="../../_sources/methods/probability-and-statistics/probability-theory.md" target="_blank"
+      <li><a href="../../_sources/methods/probability-and-statistics/probability-theory.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -322,7 +324,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -383,7 +385,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -399,6 +403,26 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Вероятность, условная вероятность, правило Байеса</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Вероятность</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Условная вероятность</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Правило Байеса (Теорема Байеса)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Случайные величины</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Распределения вероятностей</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Дискретные распределения</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Непрерывные распределения</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cdf">Функция распределения (CDF)</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -408,15 +432,226 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="id1">
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Теория вероятностей<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Теория вероятностей — это математический аппарат для работы со случайными событиями. Она позволяет нам количественно оценить шансы того или иного исхода.</p>
+<section id="id2">
+<h2>Вероятность, условная вероятность, правило Байеса<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Вероятность<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p><strong>Вероятность</strong> — это число от 0 до 1, которое показывает, насколько вероятно наступление некоторого события.</p>
 <ul class="simple">
-<li><p>Вероятность, условная вероятность, правило Байеса</p></li>
-<li><p>Случайные величины (непрерывные и дискретные)</p></li>
-<li><p>Функция плотности и функция распределения</p></li>
-<li><p>Непрерывные распределения (равномерное, нормальное, экспоненциальное, …)</p></li>
-<li><p>Дискретные распределения (биномиальное, Пуассона, …)</p></li>
+<li><p>0 — событие невозможно.</p></li>
+<li><p>1 — событие достоверно (произойдет точно).</p></li>
+<li><p>0.5 — событие равновероятно (например, выпадение “орла” при подбрасывании честной монетки).</p></li>
 </ul>
+<p>Классическая формула:
+$<span class="math notranslate nohighlight">\(
+P(A) = \frac{\text{Количество благоприятных исходов}}{\text{Общее количество всех возможных исходов}}
+\)</span>$</p>
+<p><strong>Пример:</strong> Какова вероятность вытащить туза из стандартной колоды в 52 карты?</p>
+<p>В колоде 4 туза (благоприятные исходы) и 52 карты (все исходы).
+<span class="math notranslate nohighlight">\(P(\text{Туз}) = \frac{4}{52} = \frac{1}{13} \approx 0.077\)</span></p>
+</section>
+<section id="id4">
+<h3>Условная вероятность<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p><strong>Условная вероятность</strong> — это вероятность наступления события A, <em>при условии, что событие B уже произошло</em>. Обозначается как <span class="math notranslate nohighlight">\(P(A|B)\)</span>.</p>
+<p><strong>Пример:</strong> Какова вероятность вытащить второго туза, если мы уже вытащили одного и не вернули его в колоду?</p>
+<p>Теперь в колоде осталось 51 карта, и только 3 из них — тузы.</p>
+<p><span class="math notranslate nohighlight">\(P(\text{Второй туз} | \text{Первый был туз}) = \frac{3}{51} = \frac{1}{17} \approx 0.059\)</span></p>
+<p>Знание о том, что первое событие произошло, изменило наши шансы.</p>
+<p>Формула условной вероятности:</p>
+<div class="math notranslate nohighlight">
+\[
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+\]</div>
+<p>Где <span class="math notranslate nohighlight">\(P(A \cap B)\)</span> — это вероятность того, что оба события A и B произойдут вместе.</p>
+</section>
+<section id="id5">
+<h3>Правило Байеса (Теорема Байеса)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>Это одна из самых важных теорем в науке о данных. Она позволяет “перевернуть” условную вероятность. Если мы знаем <span class="math notranslate nohighlight">\(P(A|B)\)</span>, то с помощью теоремы Байеса мы можем найти <span class="math notranslate nohighlight">\(P(B|A)\)</span>.</p>
+<p><strong>Аналогия:</strong></p>
+<ul class="simple">
+<li><p>Вы знаете, какова вероятность того, что у человека с редкой болезнью будет положительный тест (<span class="math notranslate nohighlight">\(P(\text{Тест+}| \text{Болезнь})\)</span>).</p></li>
+<li><p>Но вам, как врачу, нужно знать другое: какова вероятность, что человек <em>действительно болен</em>, если его тест оказался положительным (<span class="math notranslate nohighlight">\(P(\text{Болезнь} | \text{Тест+})\)</span>)?</p></li>
+</ul>
+<p>Теорема Байеса связывает эти вероятности:</p>
+<div class="math notranslate nohighlight">
+\[
+P(B|A) = \frac{P(A|B) \cdot P(B)}{P(A)}
+\]</div>
+<p>Эта теорема — основа для байесовской статистики, спам-фильтров и многих алгоритмов машинного обучения.</p>
+</section>
+</section>
+<section id="id6">
+<h2>Случайные величины<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p><strong>Случайная величина</strong> — это переменная, значение которой является числовым исходом случайного эксперимента. Проще говоря, это число, которое мы еще не знаем, но которое появится в результате какого-то случайного процесса.</p>
+<p>Они бывают двух типов:</p>
+<ul class="simple">
+<li><p><strong>Дискретные:</strong> Могут принимать только отдельные, изолированные значения. Их можно “пересчитать”.</p>
+<ul>
+<li><p><em>Пример:</em> Количество выпавших “орлов” при трех подбрасываниях монетки (может быть 0, 1, 2, или 3).</p></li>
+<li><p><em>Пример:</em> Количество клиентов, которые придут в магазин за час.</p></li>
+</ul>
+</li>
+<li><p><strong>Непрерывные:</strong> Могут принимать любое значение в пределах некоторого диапазона.</p>
+<ul>
+<li><p><em>Пример:</em> Рост человека (может быть 180.1 см, 180.11 см и т.д.).</p></li>
+<li><p><em>Пример:</em> Точное время ожидания автобуса.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id7">
+<h2>Распределения вероятностей<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>Это готовые “шаблоны” или модели, которые описывают поведение многих случайных процессов в реальном мире.</p>
+<section id="id8">
+<h3>Дискретные распределения<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Распределение Бернулли:</strong> Описывает один эксперимент с двумя исходами (успех/неудача). Пример: одно подбрасывание монетки.</p></li>
+<li><p><strong>Биномиальное распределение:</strong> Описывает количество “успехов” в <span class="math notranslate nohighlight">\(n\)</span> независимых испытаниях Бернулли. Пример: сколько “орлов” выпадет при 10 подбрасываниях монетки.</p></li>
+<li><p><strong>Распределение Пуассона:</strong> Описывает количество событий, происходящих за фиксированный интервал времени или пространства, если эти события происходят с известной средней частотой. Пример: сколько звонков поступит в колл-центр за час.</p></li>
+</ul>
+<p>Для дискретных величин мы строим <strong>функцию вероятности (PMF - Probability Mass Function)</strong>, которая показывает вероятность каждого конкретного исхода.</p>
+<p><strong>Биномиальное распределение:</strong> Количество “успехов” в <span class="math notranslate nohighlight">\(n\)</span> независимых испытаниях.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> - количество испытаний.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> - вероятность успеха в одном испытании.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+
+<span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span>  <span class="c1"># 10 подбрасываний монетки, вероятность орла 0.5</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pmf_binom</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pmf_binom</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">, p=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Биномиальное распределение (PMF)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Количество успехов (&quot;орлов&quot;)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Вероятность&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/df96f7a7821560682d99e24d9d4e882580a9623bbcea0ec6a576ad3e939094d2.png" src="../../_images/df96f7a7821560682d99e24d9d4e882580a9623bbcea0ec6a576ad3e939094d2.png" />
+</div>
+</div>
+<p><strong>Распределение Пуассона:</strong> Количество событий за фиксированный интервал.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">μ</span></code> (или <code class="docutils literal notranslate"><span class="pre">lambda</span></code>) - среднее количество событий за интервал.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># В среднем 3 звонка в колл-центр за час</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">pmf_poisson</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pmf_poisson</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;μ=</span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Распределение Пуассона (PMF)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Количество событий (звонков)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Вероятность&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8bc3431841b215f30459e56027a2071af0702d0212cf078a03ba626f4eec1de6.png" src="../../_images/8bc3431841b215f30459e56027a2071af0702d0212cf078a03ba626f4eec1de6.png" />
+</div>
+</div>
+</section>
+<section id="id9">
+<h3>Непрерывные распределения<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Равномерное распределение:</strong> Все исходы в некотором диапазоне равновероятны. Пример: время ожидания автобуса, который ходит ровно каждые 15 минут.</p></li>
+<li><p><strong>Нормальное распределение (Гауссово):</strong> Самое важное распределение в статистике. Оно описывает множество явлений в природе и социуме (рост, вес, ошибки измерений). Его график — симметричный “колокол”.</p></li>
+<li><p><strong>Экспоненциальное распределение:</strong> Описывает время между двумя последовательными событиями в процессе Пуассона. Пример: время до следующего звонка в колл-центр.</p></li>
+</ul>
+<p>Для непрерывных величин мы строим <strong>функцию плотности вероятности (PDF - Probability Density Function)</strong>. Вероятность попадания в интервал равна <strong>площади под кривой</strong> на этом интервале.</p>
+<p><strong>Нормальное распределение (Гауссово):</strong> Самое знаменитое распределение.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loc</span></code> - среднее значение (центр колокола).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code> - стандартное отклонение (ширина колокола).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="c1"># Среднее 0, ст. отклонение 1 (стандартное нормальное)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">pdf_norm</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_norm</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;μ=</span><span class="si">{</span><span class="n">loc</span><span class="si">}</span><span class="s1">, σ=</span><span class="si">{</span><span class="n">scale</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Нормальное распределение (PDF)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Значение случайной величины&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Плотность вероятности&#39;</span><span class="p">)</span>
+
+<span class="c1"># Закрасим площадь, соответствующую P(-1 &lt; X &lt; 1)</span>
+<span class="n">x_fill</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_fill</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_fill</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Площадь ≈ 68%&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a09ce8590d015960759287331f2995ebcf01e51c6496dce0082d2c664dfd76c5.png" src="../../_images/a09ce8590d015960759287331f2995ebcf01e51c6496dce0082d2c664dfd76c5.png" />
+</div>
+</div>
+<p><strong>Функция плотности</strong> <span class="math notranslate nohighlight">\(f(x)\)</span> используется только для <strong>непрерывных</strong> случайных величин.
+Сама по себе <span class="math notranslate nohighlight">\(f(x)\)</span> — это НЕ вероятность! Она показывает, в какой области значения случайной величины более “плотные” или вероятные.</p>
+<p><strong>Ключевая идея:</strong> Вероятность попадания величины в некоторый интервал <span class="math notranslate nohighlight">\([a, b]\)</span> равна <strong>площади под графиком</strong> PDF на этом интервале.</p>
+<div class="math notranslate nohighlight">
+\[
+P(a \le X \le b) = \int_{a}^{b} f(x) dx
+\]</div>
+<p>Общая площадь под всем графиком PDF всегда равна 1.</p>
+</section>
+</section>
+<section id="cdf">
+<h2>Функция распределения (CDF)<a class="headerlink" href="#cdf" title="Link to this heading">#</a></h2>
+<p><strong>Функция распределения (CDF - Cumulative Distribution Function)</strong> показывает “накопленную” вероятность <span class="math notranslate nohighlight">\(P(X \le x)\)</span>. Она всегда возрастает от 0 до 1. Давайте посмотрим на CDF для нашего нормального распределения.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf_norm</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cdf_norm</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CDF&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Функция распределения (CDF) для нормального закона&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;P(X &lt;= x)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Отметим точку x=0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="p">),</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;P(X &lt;= 0) = 0.5&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.05</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/14ccb7f402ef8559fe35b410b39f294b04aaf2d69e5968885fbcdef0371264b4.png" src="../../_images/14ccb7f402ef8559fe35b410b39f294b04aaf2d69e5968885fbcdef0371264b4.png" />
+</div>
+</div>
+<p><strong>Функция распределения</strong> <span class="math notranslate nohighlight">\(F(x)\)</span> показывает вероятность того, что случайная величина <span class="math notranslate nohighlight">\(X\)</span> примет значение, <strong>меньшее или равное</strong> <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+F(x) = P(X \le x)
+\]</div>
+<p>Это “накопленная” вероятность. Это универсальный способ описания как для дискретных, так и для непрерывных величин.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -473,6 +708,33 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Вероятность, условная вероятность, правило Байеса</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Вероятность</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Условная вероятность</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Правило Байеса (Теорема Байеса)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Случайные величины</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Распределения вероятностей</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Дискретные распределения</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Непрерывные распределения</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cdf">Функция распределения (CDF)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
