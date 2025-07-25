@@ -22,7 +22,7 @@ parts:
       sections:
       - file: methods/probability-and-statistics/probability-theory.ipynb
       - file: methods/probability-and-statistics/statistics.ipynb
-      - file: methods/probability-and-statistics/advanced
+      - file: methods/probability-and-statistics/advanced.ipynb
     - file: methods/numerical-analysis/intro
       sections:
       - file: methods/numerical-analysis/optimization

@@ -314,7 +314,7 @@
       
       
       
-      <li><a href="../../_sources/methods/probability-and-statistics/advanced.md" target="_blank"
+      <li><a href="../../_sources/methods/probability-and-statistics/advanced.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -324,7 +324,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -408,8 +408,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-method">Дельта-метод (Delta Method)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-generating-function-mgf">Производящая функция моментов (Moment Generating Function, MGF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Дельта-метод: “Эффект домино” в статистике</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Практический пример: Оценка популярности кандидата</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mgf">Производящая функция моментов (MGF): “ДНК” случайности</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Практический пример: Поток покупателей в магазине</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -421,43 +427,146 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p>Хорошо, двигаемся дальше. Завершаем большой раздел “Теория вероятностей и Статистика” последней теоретической главой.</p>
-<p>Вот текст для файла <code class="docutils literal notranslate"><span class="pre">methods/probability-and-statistics/advanced.md</span></code>.</p>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="id1">
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Продвинутые темы<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>Здесь мы рассмотрим несколько концепций, которые являются логическим продолжением основ и часто встречаются в более сложных статистических моделях и алгоритмах машинного обучения.</p>
-<section id="delta-method">
-<h2>Дельта-метод (Delta Method)<a class="headerlink" href="#delta-method" title="Link to this heading">#</a></h2>
-<p>Дельта-метод — это удобный инструмент, который позволяет нам найти <strong>приближенное</strong> распределение вероятностей для функции от случайной величины, если мы знаем распределение самой этой случайной величины.</p>
-<p><strong>Простыми словами:</strong>
-Представьте, что вы знаете среднее и дисперсию случайной величины <span class="math notranslate nohighlight">\(X\)</span> (например, из Центральной предельной теоремы мы знаем, что выборочное среднее <span class="math notranslate nohighlight">\(\bar{X}\)</span> имеет примерно нормальное распределение). А что можно сказать о распределении величины <span class="math notranslate nohighlight">\(Y = g(X)\)</span>, например, о <span class="math notranslate nohighlight">\(Y = \log(\bar{X})\)</span> или <span class="math notranslate nohighlight">\(Y = (\bar{X})^2\)</span>?</p>
-<p>Дельта-метод, используя разложение функции <span class="math notranslate nohighlight">\(g(X)\)</span> в ряд Тейлора (мы берем только первую, линейную часть), дает нам ответ:</p>
+<p>Здесь мы рассмотрим несколько концепций, которые являются логическим продолжением основ и часто встречаются в более сложных статистических моделях и алгоритмах машинного обучения, но часто кажущиеся абстрактными: Дельта-метод и Производящую функцию моментов (MGF).</p>
+<section id="id2">
+<h2>Дельта-метод: “Эффект домино” в статистике<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Представьте себе ряд костяшек домино. Вы толкаете первую костяшку, и она падает. Но вы толкаете ее не всегда одинаково: иногда чуть левее, иногда чуть правее. У этого первого толчка есть <strong>небольшой случайный разброс</strong>.</p>
+<p>Последняя костяшка в ряду тоже будет падать с некоторым разбросом. Логично, что ее разброс как-то зависит от разброса вашего первого толчка.</p>
 <blockquote>
-<div><p>Если <span class="math notranslate nohighlight">\(X\)</span> имеет приблизительно нормальное распределение со средним <span class="math notranslate nohighlight">\(\mu\)</span> и дисперсией <span class="math notranslate nohighlight">\(\sigma^2\)</span>, то <span class="math notranslate nohighlight">\(g(X)\)</span> будет иметь приблизительно нормальное распределение со средним <span class="math notranslate nohighlight">\(g(\mu)\)</span> и дисперсией <span class="math notranslate nohighlight">\((g'(\mu))^2 \sigma^2\)</span>.</p>
+<div><p><strong>Дельта-метод — это способ вычислить “разброс” конечного результата, зная “разброс” начальной причины.</strong></p>
 </div></blockquote>
-<p>Здесь <span class="math notranslate nohighlight">\(g'(\mu)\)</span> — это производная функции <span class="math notranslate nohighlight">\(g\)</span> в точке <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
-<p><strong>Зачем это нужно?</strong>
-Это позволяет нам строить доверительные интервалы и проверять гипотезы для гораздо более широкого круга статистик, а не только для среднего. Например, в логистической регрессии мы оцениваем логарифм шансов, а затем с помощью дельта-метода можем найти доверительный интервал для самих шансов или вероятностей.</p>
-</section>
-<section id="moment-generating-function-mgf">
-<h2>Производящая функция моментов (Moment Generating Function, MGF)<a class="headerlink" href="#moment-generating-function-mgf" title="Link to this heading">#</a></h2>
-<p>Это еще один мощный теоретический инструмент, который, как “паспорт”, однозначно определяет распределение случайной величины.</p>
-<p>Производящая функция моментов для случайной величины <span class="math notranslate nohighlight">\(X\)</span> определяется как:
-$<span class="math notranslate nohighlight">\(
-M_X(t) = E[e^{tX}]
-\)</span><span class="math notranslate nohighlight">\(
-Где \)</span>E[\cdot]<span class="math notranslate nohighlight">\( — это математическое ожидание. Название &quot;производящая&quot; она получила не случайно. Если найти производные этой функции в точке \)</span>t=0$, можно получить <strong>моменты</strong> распределения (математическое ожидание, дисперсию и т.д.).</p>
+<p>Это невероятно полезно в статистике.</p>
+<section id="id3">
+<h3>Практический пример: Оценка популярности кандидата<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Предположим, мы проводим предвыборный опрос.</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(E[X] = M'_X(0)\)</span> (первая производная в нуле дает среднее)</p></li>
-<li><p><span class="math notranslate nohighlight">\(E[X^2] = M''_X(0)\)</span> (вторая производная дает второй начальный момент)</p></li>
+<li><p>Мы опросили 1000 человек.</p></li>
+<li><p>Из них 550 сказали, что проголосуют за кандидата А.</p></li>
 </ul>
-<p><strong>Ключевые свойства MGF:</strong></p>
-<ol class="arabic simple">
-<li><p><strong>Уникальность:</strong> Если у двух распределений одинаковые производящие функции моментов, то это одно и то же распределение.</p></li>
-<li><p><strong>Сумма независимых случайных величин:</strong> Если <span class="math notranslate nohighlight">\(Z = X + Y\)</span>, где <span class="math notranslate nohighlight">\(X\)</span> и <span class="math notranslate nohighlight">\(Y\)</span> независимы, то <span class="math notranslate nohighlight">\(M_Z(t) = M_X(t) \cdot M_Y(t)\)</span>. Это свойство очень упрощает нахождение распределения суммы случайных величин. Например, с помощью MGF можно легко доказать, что сумма двух независимых нормально распределенных величин также имеет нормальное распределение.</p></li>
-</ol>
-<p>Вместе с MGF часто используют <strong>характеристическую функцию</strong>, которая является ее близким родственником, но имеет преимущество — она существует абсолютно для любого распределения.</p>
+<p>Наша лучшая оценка популярности кандидата А (обозначим ее <span class="math notranslate nohighlight">\(\hat{p}\)</span>) — это <span class="math notranslate nohighlight">\(550 / 1000 = 0.55\)</span>.</p>
+<p>Но если бы мы опросили другую тысячу человек, результат был бы немного другим (например, 0.54 или 0.56). У нашей оценки есть <strong>случайный разброс</strong>. Мы можем оценить этот разброс (стандартную ошибку) с помощью статистики.</p>
+<p><strong>А теперь более сложный вопрос:</strong>
+Политологи часто используют не саму популярность, а <strong>отношение шансов (odds)</strong>, которое вычисляется как <span class="math notranslate nohighlight">\(g(p) = \frac{p}{1-p}\)</span>. Для нашего кандидата это <span class="math notranslate nohighlight">\(0.55 / (1-0.55) \approx 1.22\)</span>. Это означает, что его шансы на победу в 1.22 раза выше, чем на поражение.</p>
+<p><strong>Главный вопрос:</strong> Если мы знаем разброс для нашей оценки популярности <span class="math notranslate nohighlight">\(\hat{p}\)</span>, как нам найти разброс для оценки шансов?</p>
+<p>Именно здесь нам помогает Дельта-метод. Он позволяет “трансформировать” исходный разброс в новый, используя производную (которая, по сути, измеряет “чувствительность” функции к малым изменениям).</p>
+<p>Давайте посмотрим на это с помощью симуляции. Мы симулируем 10,000 опросов и посмотрим на разброс оценок популярности и оценок шансов.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+
+<span class="c1"># Параметры нашей симуляции</span>
+<span class="n">n_trials</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># 1000 человек в каждом опросе</span>
+<span class="n">p_true</span> <span class="o">=</span> <span class="mf">0.55</span>    <span class="c1"># Истинная популярность кандидата</span>
+<span class="n">n_simulations</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1"># Проведем 10,000 симуляций опросов</span>
+
+<span class="c1"># Проводим симуляции</span>
+<span class="n">successes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n_trials</span><span class="p">,</span> <span class="n">p_true</span><span class="p">,</span> <span class="n">n_simulations</span><span class="p">)</span>
+<span class="n">p_hat_values</span> <span class="o">=</span> <span class="n">successes</span> <span class="o">/</span> <span class="n">n_trials</span>
+<span class="n">odds_values</span> <span class="o">=</span> <span class="n">p_hat_values</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_hat_values</span><span class="p">)</span>
+
+<span class="c1"># Визуализируем оба разброса</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">p_hat_values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Разброс оценок популярности ($\hat</span><span class="si">{p}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Значение оценки&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">odds_values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Разброс оценок шансов ($odds$)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Значение оценки&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Как разброс причины влияет на разброс результата&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+C:\Temp\ipykernel_4324\1443965179.py:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+  ax1.set_title(&#39;Разброс оценок популярности ($\hat{p}$)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/7e0e42904bf0762a0e2adce36ca30e9ca77e3b6f47a5cacd1b90b8c902f0b69a.png" src="../../_images/7e0e42904bf0762a0e2adce36ca30e9ca77e3b6f47a5cacd1b90b8c902f0b69a.png" />
+</div>
+</div>
+<p>Мы видим, что изначальный разброс оценок популярности (слева) породил новый разброс для оценок шансов (справа). Дельта-метод позволяет нам математически вычислить параметры правого графика (его среднее и разброс), зная только параметры левого.</p>
+</section>
+</section>
+<section id="mgf">
+<h2>Производящая функция моментов (MGF): “ДНК” случайности<a class="headerlink" href="#mgf" title="Link to this heading">#</a></h2>
+<p>Представьте, что у каждого вида животных есть уникальный код ДНК. Изучив ДНК, можно узнать всё о животном: какого оно вида и какие у него будут средние характеристики (рост, вес и т.д.).</p>
+<blockquote>
+<div><p><strong>Производящая функция моментов (MGF) — это как уникальный ДНК-код для распределения случайной величины.</strong></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>У нормального распределения своя MGF, у распределения Пуассона — своя, и они не совпадают.</p></li>
+<li><p>“Расшифровав” MGF (взяв от нее производные), можно получить все важные числовые характеристики распределения: среднее, дисперсию и т.д. (они называются “моментами”).</p></li>
+</ul>
+<p><strong>Но главная суперсила MGF проявляется при сложении независимых случайных величин.</strong></p>
+<section id="id4">
+<h3>Практический пример: Поток покупателей в магазине<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>Представьте себе большой супермаркет с двумя входами.</p>
+<ul class="simple">
+<li><p>Через <strong>Вход 1</strong> в среднем заходит 10 покупателей в минуту. Поток покупателей хорошо описывается распределением Пуассона.</p></li>
+<li><p>Через <strong>Вход 2</strong> в среднем заходит 15 покупателей в минуту. Этот поток независим от первого и также описывается распределением Пуассона.</p></li>
+</ul>
+<p><strong>Вопрос:</strong> Каким будет распределение <strong>общего</strong> числа покупателей, входящих в магазин за минуту?</p>
+<p>Интуиция подсказывает, что среднее будет <span class="math notranslate nohighlight">\(10 + 15 = 25\)</span>. Но будет ли само распределение по-прежнему распределением Пуассона?</p>
+<p>MGF дает на этот вопрос элегантный и строгий ответ. Она гласит:</p>
+<blockquote>
+<div><p><strong>“ДНК” суммы = “ДНК” первого * “ДНК” второго</strong></p>
+</div></blockquote>
+<p>Математики уже посчитали, что если перемножить “ДНК” двух Пуассоновских распределений, то получится “ДНК” нового Пуассоновского распределения, у которого среднее просто равно сумме исходных средних.</p>
+<p>Давайте проверим этот красивый теоретический результат с помощью симуляции. Мы сгенерируем данные для каждого входа и посмотрим на распределение их суммы.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Параметры</span>
+<span class="n">lambda1</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Среднее для Входа 1</span>
+<span class="n">lambda2</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># Среднее для Входа 2</span>
+<span class="n">n_minutes</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1"># Симулируем 10,000 минут работы магазина</span>
+
+<span class="c1"># Генерируем случайные данные для каждого входа</span>
+<span class="n">buyers_door1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">n_minutes</span><span class="p">)</span>
+<span class="n">buyers_door2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lambda2</span><span class="p">,</span> <span class="n">n_minutes</span><span class="p">)</span>
+
+<span class="c1"># Считаем общую сумму для каждой минуты</span>
+<span class="n">total_buyers</span> <span class="o">=</span> <span class="n">buyers_door1</span> <span class="o">+</span> <span class="n">buyers_door2</span>
+
+<span class="c1"># --- Визуализация ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="c1"># Гистограмма нашей симуляции</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">total_buyers</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Общий поток (симуляция)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Теоретический результат: распределение Пуассона со средним 10 + 15 = 25</span>
+<span class="n">lambda_total</span> <span class="o">=</span> <span class="n">lambda1</span> <span class="o">+</span> <span class="n">lambda2</span>
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">pmf_poisson_total</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">lambda_total</span><span class="p">)</span>
+
+<span class="c1"># Накладываем теорию на график</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">pmf_poisson_total</span><span class="p">,</span> <span class="s1">&#39;ro-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Теория: Пуассон(</span><span class="si">{</span><span class="n">lambda_total</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Распределение общего потока покупателей&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Общее количество покупателей в минуту&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Вероятность&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/50ed1ba6454272e7252cc45057209ae3a66de281a9e08ad0507b021ed8049058.png" src="../../_images/50ed1ba6454272e7252cc45057209ae3a66de281a9e08ad0507b021ed8049058.png" />
+</div>
+</div>
+<p>Результаты симуляции ложатся на теоретическую кривую. Это подтверждает, что сумма двух Пуассоновских процессов — это тоже Пуассоновский процесс. MGF позволяет доказать это без симуляций.</p>
+</section>
 </section>
 </section>
 
@@ -525,8 +634,14 @@ M_X(t) = E[e^{tX}]
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-method">Дельта-метод (Delta Method)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-generating-function-mgf">Производящая функция моментов (Moment Generating Function, MGF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Дельта-метод: “Эффект домино” в статистике</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Практический пример: Оценка популярности кандидата</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mgf">Производящая функция моментов (MGF): “ДНК” случайности</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Практический пример: Поток покупателей в магазине</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
