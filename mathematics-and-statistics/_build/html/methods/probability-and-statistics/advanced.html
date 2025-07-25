@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'methods/probability-and-statistics/advanced';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -383,7 +385,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -399,6 +403,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-method">Дельта-метод (Delta Method)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-generating-function-mgf">Производящая функция моментов (Moment Generating Function, MGF)</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -408,12 +421,44 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="id1">
+  <p>Хорошо, двигаемся дальше. Завершаем большой раздел “Теория вероятностей и Статистика” последней теоретической главой.</p>
+<p>Вот текст для файла <code class="docutils literal notranslate"><span class="pre">methods/probability-and-statistics/advanced.md</span></code>.</p>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Продвинутые темы<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Здесь мы рассмотрим несколько концепций, которые являются логическим продолжением основ и часто встречаются в более сложных статистических моделях и алгоритмах машинного обучения.</p>
+<section id="delta-method">
+<h2>Дельта-метод (Delta Method)<a class="headerlink" href="#delta-method" title="Link to this heading">#</a></h2>
+<p>Дельта-метод — это удобный инструмент, который позволяет нам найти <strong>приближенное</strong> распределение вероятностей для функции от случайной величины, если мы знаем распределение самой этой случайной величины.</p>
+<p><strong>Простыми словами:</strong>
+Представьте, что вы знаете среднее и дисперсию случайной величины <span class="math notranslate nohighlight">\(X\)</span> (например, из Центральной предельной теоремы мы знаем, что выборочное среднее <span class="math notranslate nohighlight">\(\bar{X}\)</span> имеет примерно нормальное распределение). А что можно сказать о распределении величины <span class="math notranslate nohighlight">\(Y = g(X)\)</span>, например, о <span class="math notranslate nohighlight">\(Y = \log(\bar{X})\)</span> или <span class="math notranslate nohighlight">\(Y = (\bar{X})^2\)</span>?</p>
+<p>Дельта-метод, используя разложение функции <span class="math notranslate nohighlight">\(g(X)\)</span> в ряд Тейлора (мы берем только первую, линейную часть), дает нам ответ:</p>
+<blockquote>
+<div><p>Если <span class="math notranslate nohighlight">\(X\)</span> имеет приблизительно нормальное распределение со средним <span class="math notranslate nohighlight">\(\mu\)</span> и дисперсией <span class="math notranslate nohighlight">\(\sigma^2\)</span>, то <span class="math notranslate nohighlight">\(g(X)\)</span> будет иметь приблизительно нормальное распределение со средним <span class="math notranslate nohighlight">\(g(\mu)\)</span> и дисперсией <span class="math notranslate nohighlight">\((g'(\mu))^2 \sigma^2\)</span>.</p>
+</div></blockquote>
+<p>Здесь <span class="math notranslate nohighlight">\(g'(\mu)\)</span> — это производная функции <span class="math notranslate nohighlight">\(g\)</span> в точке <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
+<p><strong>Зачем это нужно?</strong>
+Это позволяет нам строить доверительные интервалы и проверять гипотезы для гораздо более широкого круга статистик, а не только для среднего. Например, в логистической регрессии мы оцениваем логарифм шансов, а затем с помощью дельта-метода можем найти доверительный интервал для самих шансов или вероятностей.</p>
+</section>
+<section id="moment-generating-function-mgf">
+<h2>Производящая функция моментов (Moment Generating Function, MGF)<a class="headerlink" href="#moment-generating-function-mgf" title="Link to this heading">#</a></h2>
+<p>Это еще один мощный теоретический инструмент, который, как “паспорт”, однозначно определяет распределение случайной величины.</p>
+<p>Производящая функция моментов для случайной величины <span class="math notranslate nohighlight">\(X\)</span> определяется как:
+$<span class="math notranslate nohighlight">\(
+M_X(t) = E[e^{tX}]
+\)</span><span class="math notranslate nohighlight">\(
+Где \)</span>E[\cdot]<span class="math notranslate nohighlight">\( — это математическое ожидание. Название &quot;производящая&quot; она получила не случайно. Если найти производные этой функции в точке \)</span>t=0$, можно получить <strong>моменты</strong> распределения (математическое ожидание, дисперсию и т.д.).</p>
 <ul class="simple">
-<li><p>Дельта-метод</p></li>
-<li><p>Производящая функция моментов, характеристическая функция</p></li>
+<li><p><span class="math notranslate nohighlight">\(E[X] = M'_X(0)\)</span> (первая производная в нуле дает среднее)</p></li>
+<li><p><span class="math notranslate nohighlight">\(E[X^2] = M''_X(0)\)</span> (вторая производная дает второй начальный момент)</p></li>
 </ul>
+<p><strong>Ключевые свойства MGF:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Уникальность:</strong> Если у двух распределений одинаковые производящие функции моментов, то это одно и то же распределение.</p></li>
+<li><p><strong>Сумма независимых случайных величин:</strong> Если <span class="math notranslate nohighlight">\(Z = X + Y\)</span>, где <span class="math notranslate nohighlight">\(X\)</span> и <span class="math notranslate nohighlight">\(Y\)</span> независимы, то <span class="math notranslate nohighlight">\(M_Z(t) = M_X(t) \cdot M_Y(t)\)</span>. Это свойство очень упрощает нахождение распределения суммы случайных величин. Например, с помощью MGF можно легко доказать, что сумма двух независимых нормально распределенных величин также имеет нормальное распределение.</p></li>
+</ol>
+<p>Вместе с MGF часто используют <strong>характеристическую функцию</strong>, которая является ее близким родственником, но имеет преимущество — она существует абсолютно для любого распределения.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -470,6 +515,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-method">Дельта-метод (Delta Method)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-generating-function-mgf">Производящая функция моментов (Moment Generating Function, MGF)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
