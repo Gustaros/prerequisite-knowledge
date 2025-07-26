@@ -25,8 +25,9 @@ parts:
       - file: methods/probability-and-statistics/advanced.ipynb
     - file: methods/numerical-analysis/intro
       sections:
-      - file: methods/numerical-analysis/optimization
-      - file: methods/numerical-analysis/integration-interpolation
+      - file: methods/numerical-analysis/optimization.ipynb
+      - file: methods/numerical-analysis/integration.ipynb
+      - file: methods/numerical-analysis/interpolation.ipynb
     - file: methods/differential-equations
 
   - caption: Дополнительно
