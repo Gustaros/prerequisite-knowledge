@@ -32,3 +32,4 @@ parts:
   - caption: Дополнительно
     chapters:
     - file: references
+    - file: about
