@@ -4,3 +4,4 @@ numpy
 ghp-import
 sympy
 scipy
+ipywidgets
