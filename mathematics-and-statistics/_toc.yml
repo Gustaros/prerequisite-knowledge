@@ -27,7 +27,7 @@ parts:
       sections:
       - file: methods/numerical-analysis/optimization.ipynb
       - file: methods/numerical-analysis/integration-interpolation.ipynb
-    - file: methods/differential-equations
+    - file: methods/differential-equations.ipynb
 
   - caption: Дополнительно
     chapters:
