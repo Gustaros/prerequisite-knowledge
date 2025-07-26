@@ -60,6 +60,8 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'methods/probability-and-statistics/advanced';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Численные методы" href="../numerical-analysis/intro.html" />
@@ -213,6 +215,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Дополнительно</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../references.html">Полезные ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">О проекте</a></li>
 </ul>
 
     </div>
@@ -489,11 +492,11 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
 &lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
-C:\Temp\ipykernel_4324\1443965179.py:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+C:\Temp\ipykernel_4064\1443965179.py:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
   ax1.set_title(&#39;Разброс оценок популярности ($\hat{p}$)&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/7e0e42904bf0762a0e2adce36ca30e9ca77e3b6f47a5cacd1b90b8c902f0b69a.png" src="../../_images/7e0e42904bf0762a0e2adce36ca30e9ca77e3b6f47a5cacd1b90b8c902f0b69a.png" />
+<img alt="../../_images/e93049b0df22326e0b2c364c8a64d7ca022c7a7d5d3b4418630f9bbd7508d967.png" src="../../_images/e93049b0df22326e0b2c364c8a64d7ca022c7a7d5d3b4418630f9bbd7508d967.png" />
 </div>
 </div>
 <p>Мы видим, что изначальный разброс оценок популярности (слева) породил новый разброс для оценок шансов (справа). Дельта-метод позволяет нам математически вычислить параметры правого графика (его среднее и разброс), зная только параметры левого.</p>
@@ -524,6 +527,7 @@ C:\Temp\ipykernel_4324\1443965179.py:21: SyntaxWarning: invalid escape sequence 
 <div><p><strong>“ДНК” суммы = “ДНК” первого * “ДНК” второго</strong></p>
 </div></blockquote>
 <p>Математики уже посчитали, что если перемножить “ДНК” двух Пуассоновских распределений, то получится “ДНК” нового Пуассоновского распределения, у которого среднее просто равно сумме исходных средних.</p>
+<p>Это происходит потому, что MGF основана на экспоненте, а главное свойство экспоненты (<code class="docutils literal notranslate"><span class="pre">e^(a+b)</span> <span class="pre">=</span> <span class="pre">e^a</span> <span class="pre">*</span> <span class="pre">e^b</span></code>) как раз и превращает сложение случайных величин в умножение их функций.</p>
 <p>Давайте проверим этот красивый теоретический результат с помощью симуляции. Мы сгенерируем данные для каждого входа и посмотрим на распределение их суммы.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -562,10 +566,12 @@ C:\Temp\ipykernel_4324\1443965179.py:21: SyntaxWarning: invalid escape sequence 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/50ed1ba6454272e7252cc45057209ae3a66de281a9e08ad0507b021ed8049058.png" src="../../_images/50ed1ba6454272e7252cc45057209ae3a66de281a9e08ad0507b021ed8049058.png" />
+<img alt="../../_images/8b41ed13bd42b61d10f3924f12c744558eebdd9c1bf4be435458e3a65798fe41.png" src="../../_images/8b41ed13bd42b61d10f3924f12c744558eebdd9c1bf4be435458e3a65798fe41.png" />
 </div>
 </div>
 <p>Результаты симуляции ложатся на теоретическую кривую. Это подтверждает, что сумма двух Пуассоновских процессов — это тоже Пуассоновский процесс. MGF позволяет доказать это без симуляций.</p>
+<p>Но есть нюанс:) Это утверждение верно для большинства распределений, с которыми сталкиваются на практике (нормальное, Пуассона, экспоненциальное, биномиальное и т.д.). Существует теорема единственности, которая гласит: если у двух случайных величин совпадают производящие функции моментов, и эти функции существуют в некотором интервале вокруг нуля, то и распределения этих величин совпадают.</p>
+<p>Главное условие — существование MGF. Есть распределения, для которых MGF не существует (например, распределение Коши или логнормальное распределение). Для них аналогия с “ДНК” не работает, и для их идентификации используют более мощный инструмент — характеристическую функцию, которая существует всегда.</p>
 </section>
 </section>
 </section>
