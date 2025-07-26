@@ -411,12 +411,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Дельта-метод: “Эффект домино” в статистике</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Дельта-метод: Эффект домино для ошибок</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gps">Практический пример: Измерение скорости по GPS</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Практический пример: Оценка популярности кандидата</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mgf">Производящая функция моментов (MGF): “ДНК” случайности</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Практический пример: Поток покупателей в магазине</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Характеристическая функция: Всесильный старший брат MGF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Почему она сложнее для визуализации?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Практический пример: распределение Коши</a></li>
 </ul>
 </li>
 </ul>
@@ -434,13 +440,73 @@ document.write(`
 <h1>Продвинутые темы<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>Здесь мы рассмотрим несколько концепций, которые являются логическим продолжением основ и часто встречаются в более сложных статистических моделях и алгоритмах машинного обучения, но часто кажущиеся абстрактными: Дельта-метод и Производящую функцию моментов (MGF).</p>
 <section id="id2">
-<h2>Дельта-метод: “Эффект домино” в статистике<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>Представьте себе ряд костяшек домино. Вы толкаете первую костяшку, и она падает. Но вы толкаете ее не всегда одинаково: иногда чуть левее, иногда чуть правее. У этого первого толчка есть <strong>небольшой случайный разброс</strong>.</p>
-<p>Последняя костяшка в ряду тоже будет падать с некоторым разбросом. Логично, что ее разброс как-то зависит от разброса вашего первого толчка.</p>
+<h2>Дельта-метод: Эффект домино для ошибок<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Представьте, что вы измеряете сторону квадрата. Ваше измерение не идеально и имеет некоторую погрешность (ошибку). Теперь вы хотите посчитать <strong>площадь</strong> этого квадрата. Логично, что у посчитанной площади тоже будет ошибка.</p>
 <blockquote>
-<div><p><strong>Дельта-метод — это способ вычислить “разброс” конечного результата, зная “разброс” начальной причины.</strong></p>
+<div><p><strong>Дельта-метод — это способ оценить ошибку результата, зная ошибку исходных данных.</strong></p>
 </div></blockquote>
-<p>Это невероятно полезно в статистике.</p>
+<p>Он работает как эффект домино: маленькое “колебание” на входе (в измерении стороны) приводит к предсказуемому “колебанию” на выходе (в площади).</p>
+<section id="gps">
+<h3>Практический пример: Измерение скорости по GPS<a class="headerlink" href="#gps" title="Link to this heading">#</a></h3>
+<p>Представим, что GPS-трекер в машине каждую секунду сообщает свои координаты. Эти измерения не идеальны и имеют небольшую случайную ошибку, которая распределена нормально.</p>
+<ul class="simple">
+<li><p>Мы хотим посчитать <strong>скорость</strong> машины. Для этого мы берем расстояние между двумя последовательными точками и делим на время (1 секунда).</p></li>
+</ul>
+<p><strong>Вопрос:</strong> Если ошибка в координатах распределена нормально, то каким будет распределение ошибки в посчитанной скорости?</p>
+<p>Давайте симулируем это.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># для воспроизводимости</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Симулируем &quot;истинное&quot; движение машины</span>
+<span class="n">true_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Каждую секунду машина проезжает 2 метра</span>
+
+<span class="c1"># Симулируем 10000 &quot;зашумленных&quot; измерений для каждой точки</span>
+<span class="c1"># Ошибка измерения распределена нормально со средним 0 и ст. отклонением 0.1м</span>
+<span class="n">n_simulations</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">true_position</span><span class="p">),</span> <span class="n">n_simulations</span><span class="p">))</span>
+<span class="n">measured_position</span> <span class="o">=</span> <span class="n">true_position</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">+</span> <span class="n">error</span>
+
+<span class="c1"># Рассчитываем 10000 &quot;зашумленных&quot; скоростей</span>
+<span class="c1"># Скорость = (Позиция(t) - Позиция(t-1)) / 1 секунда</span>
+<span class="n">measured_speeds</span> <span class="o">=</span> <span class="n">measured_position</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">measured_position</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+<span class="c1"># Возьмем скорости в середине пути для примера</span>
+<span class="n">sample_of_speeds</span> <span class="o">=</span> <span class="n">measured_speeds</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># Визуализация</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sample_of_speeds</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Распределение ошибки скорости&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Истинная скорость (2 м/с)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Распределение ошибки вычисленной скорости&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Скорость (м/с)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Средняя посчитанная скорость: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample_of_speeds</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> м/с&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Стандартное отклонение ошибки скорости: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">sample_of_speeds</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> м/с&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d656359b86feca40443180ae8d25d72cd54f90cdb3ccc8581cc09c09af1e882a.png" src="../../_images/d656359b86feca40443180ae8d25d72cd54f90cdb3ccc8581cc09c09af1e882a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Средняя посчитанная скорость: 1.9998 м/с
+Стандартное отклонение ошибки скорости: 0.1409 м/с
+</pre></div>
+</div>
+</div>
+</div>
+<p>Вывод: Дельта-метод позволяет нам теоретически предсказать, что ошибка скорости тоже будет распределена нормально (что мы и видим на графике) и вычислить ее дисперсию, не проводя тысяч симуляций.</p>
+</section>
 <section id="id3">
 <h3>Практический пример: Оценка популярности кандидата<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>Предположим, мы проводим предвыборный опрос.</p>
@@ -457,13 +523,7 @@ document.write(`
 <p>Давайте посмотрим на это с помощью симуляции. Мы симулируем 10,000 опросов и посмотрим на разброс оценок популярности и оценок шансов.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
-
-<span class="c1"># Параметры нашей симуляции</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Параметры нашей симуляции</span>
 <span class="n">n_trials</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># 1000 человек в каждом опросе</span>
 <span class="n">p_true</span> <span class="o">=</span> <span class="mf">0.55</span>    <span class="c1"># Истинная популярность кандидата</span>
 <span class="n">n_simulations</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1"># Проведем 10,000 симуляций опросов</span>
@@ -490,13 +550,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
-&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
-C:\Temp\ipykernel_4064\1443965179.py:21: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:15: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+&lt;&gt;:15: SyntaxWarning: invalid escape sequence &#39;\h&#39;
+C:\Temp\ipykernel_11144\2966454494.py:15: SyntaxWarning: invalid escape sequence &#39;\h&#39;
   ax1.set_title(&#39;Разброс оценок популярности ($\hat{p}$)&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/e93049b0df22326e0b2c364c8a64d7ca022c7a7d5d3b4418630f9bbd7508d967.png" src="../../_images/e93049b0df22326e0b2c364c8a64d7ca022c7a7d5d3b4418630f9bbd7508d967.png" />
+<img alt="../../_images/87f7e2b21fea4eb185438b55338588225701781fc493dcaaea9b2e1d4c79f2a3.png" src="../../_images/87f7e2b21fea4eb185438b55338588225701781fc493dcaaea9b2e1d4c79f2a3.png" />
 </div>
 </div>
 <p>Мы видим, что изначальный разброс оценок популярности (слева) породил новый разброс для оценок шансов (справа). Дельта-метод позволяет нам математически вычислить параметры правого графика (его среднее и разброс), зная только параметры левого.</p>
@@ -566,12 +626,96 @@ C:\Temp\ipykernel_4064\1443965179.py:21: SyntaxWarning: invalid escape sequence 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/8b41ed13bd42b61d10f3924f12c744558eebdd9c1bf4be435458e3a65798fe41.png" src="../../_images/8b41ed13bd42b61d10f3924f12c744558eebdd9c1bf4be435458e3a65798fe41.png" />
+<img alt="../../_images/a4c28af9bc90531e7b4b04522cf1c2cd3064582917cd4334ffbd9ebff1eb2d42.png" src="../../_images/a4c28af9bc90531e7b4b04522cf1c2cd3064582917cd4334ffbd9ebff1eb2d42.png" />
 </div>
 </div>
 <p>Результаты симуляции ложатся на теоретическую кривую. Это подтверждает, что сумма двух Пуассоновских процессов — это тоже Пуассоновский процесс. MGF позволяет доказать это без симуляций.</p>
 <p>Но есть нюанс:) Это утверждение верно для большинства распределений, с которыми сталкиваются на практике (нормальное, Пуассона, экспоненциальное, биномиальное и т.д.). Существует теорема единственности, которая гласит: если у двух случайных величин совпадают производящие функции моментов, и эти функции существуют в некотором интервале вокруг нуля, то и распределения этих величин совпадают.</p>
 <p>Главное условие — существование MGF. Есть распределения, для которых MGF не существует (например, распределение Коши или логнормальное распределение). Для них аналогия с “ДНК” не работает, и для их идентификации используют более мощный инструмент — характеристическую функцию, которая существует всегда.</p>
+</section>
+</section>
+<section id="id5">
+<h2>Характеристическая функция: Всесильный старший брат MGF<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><strong>Характеристическая функция</strong> — это как MGF, но еще круче.</p>
+<p>Представьте, что ДНК-тест (MGF) работает для 99% живых существ, но для некоторых экзотических глубоководных созданий он не дает результата. Вам нужен более универсальный тест.</p>
+<blockquote>
+<div><p><strong>Характеристическая функция — это универсальный ДНК-тест, который работает для АБСОЛЮТНО любого распределения.</strong></p>
+</div></blockquote>
+<p>Она решает ту же задачу, что и MGF (однозначно определяет распределение и помогает находить его характеристики), но делает это с помощью “магии” комплексных чисел. Из-за этого она всегда существует и всегда работает.</p>
+<p>В прикладном анализе данных вы чаще будете слышать про MGF, но в глубокой теоретической статистике именно характеристическая функция является основным и самым строгим инструментом.</p>
+<section id="id6">
+<h3>Почему она сложнее для визуализации?<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Выход — комплексное число:</strong> Результат характеристической функции <span class="math notranslate nohighlight">\(\phi_X(t) = E[e^{itX}]\)</span> — это комплексное число. У него есть действительная часть (Real) и мнимая часть (Imaginary). Поэтому для одного графика нам нужно строить сразу две кривые.</p></li>
+<li><p><strong>Связь с преобразованием Фурье:</strong> Характеристическая функция, по сути, является преобразованием Фурье для функции плотности вероятности. Это мощный инструмент из мира обработки сигналов, но его интуиция сложнее, чем у обычной экспоненты.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h3>Практический пример: распределение Коши<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>Давайте возьмем распределение Коши. Оно интересно тем, что у него настолько “тяжелые” хвосты (вероятность экстремальных значений не так уж мала), что для него <strong>не существует ни среднего, ни дисперсии, ни MGF</strong>. Обычный “ДНК-тест” на нем не работает.</p>
+<p>А характеристическая функция — работает! Давайте посмотрим на нее.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Возьмем 10000 случайных чисел из распределения Коши</span>
+<span class="c1"># У него нет ни среднего, ни дисперсии!</span>
+<span class="n">cauchy_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_cauchy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># Эмпирическая характеристическая функция (простое усреднение)</span>
+<span class="k">def</span> <span class="nf">empirical_char_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="c1"># e^(itx) = cos(tx) + i*sin(tx) по формуле Эйлера</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">data</span><span class="p">))</span>
+
+<span class="c1"># Диапазон для t</span>
+<span class="n">t_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="c1"># Вычисляем значения функции</span>
+<span class="n">ecf_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">empirical_char_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">cauchy_data</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_range</span><span class="p">]</span>
+
+<span class="c1"># Теоретическая характеристическая функция для стандартного Коши: phi(t) = e^(-|t|)</span>
+<span class="c1"># Она, к счастью, действительная и не имеет мнимой части.</span>
+<span class="n">theoretical_cf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">t_range</span><span class="p">))</span>
+
+<span class="c1"># Визуализация</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># График 1: Действительная часть</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_range</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ecf_values</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Действ. часть (симуляция)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_range</span><span class="p">,</span> <span class="n">theoretical_cf</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Теоретическая кривая $e^{-|t|}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Действительная часть Характеристической функции&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real($\phi(t)$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># График 2: Мнимая часть</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_range</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">ecf_values</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Мнимая часть (симуляция)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Теоретическая кривая (равна 0)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Мнимая часть Характеристической функции&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Imag($\phi(t)$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Характеристическая функция для распределения Коши&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:28: SyntaxWarning: invalid escape sequence &#39;\p&#39;
+&lt;&gt;:37: SyntaxWarning: invalid escape sequence &#39;\p&#39;
+&lt;&gt;:28: SyntaxWarning: invalid escape sequence &#39;\p&#39;
+&lt;&gt;:37: SyntaxWarning: invalid escape sequence &#39;\p&#39;
+C:\Temp\ipykernel_11144\3582742114.py:28: SyntaxWarning: invalid escape sequence &#39;\p&#39;
+  plt.ylabel(&#39;Real($\phi(t)$)&#39;)
+C:\Temp\ipykernel_11144\3582742114.py:37: SyntaxWarning: invalid escape sequence &#39;\p&#39;
+  plt.ylabel(&#39;Imag($\phi(t)$)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/82a47515b5d3f7872884aeb81ae4f1ba1cc69f9eb39574802a0c1ce41d318427.png" src="../../_images/82a47515b5d3f7872884aeb81ae4f1ba1cc69f9eb39574802a0c1ce41d318427.png" />
+</div>
+</div>
+<p>Даже для такого ‘проблемного’ распределения, как Коши, мы можем построить его уникальный ‘ДНК-код’ с помощью характеристической функции. Результаты симуляции хорошо совпадают с теоретическими кривыми.</p>
 </section>
 </section>
 </section>
@@ -640,12 +784,18 @@ C:\Temp\ipykernel_4064\1443965179.py:21: SyntaxWarning: invalid escape sequence 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Дельта-метод: “Эффект домино” в статистике</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Дельта-метод: Эффект домино для ошибок</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gps">Практический пример: Измерение скорости по GPS</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Практический пример: Оценка популярности кандидата</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mgf">Производящая функция моментов (MGF): “ДНК” случайности</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Практический пример: Поток покупателей в магазине</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Характеристическая функция: Всесильный старший брат MGF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Почему она сложнее для визуализации?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Практический пример: распределение Коши</a></li>
 </ul>
 </li>
 </ul>
