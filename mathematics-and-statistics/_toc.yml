@@ -29,6 +29,12 @@ parts:
       - file: methods/numerical-analysis/integration_interpolation.ipynb
     - file: methods/differential_equations.ipynb
 
+  - caption: DevOps
+    chapters:
+    - file: devops/kubernetes/intro
+      sections:
+      - file: devops/kubernetes/example
+
   - caption: Дополнительно
     chapters:
     - file: references
