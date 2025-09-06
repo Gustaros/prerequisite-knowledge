@@ -36,6 +36,7 @@ parts:
       - file: devops/kubernetes/example
       - file: devops/kubernetes/architecture
       - file: devops/kubernetes/control_plane
+      - file: devops/kubernetes/node
 
   - caption: Дополнительно
     chapters:

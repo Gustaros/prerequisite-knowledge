@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Kubernetes &#8212; basics</title>
+    <title>Node &#8212; basics</title>
   
   
   
@@ -57,13 +57,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'devops/kubernetes/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'devops/kubernetes/node';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Пример архитектуры" href="example.html" />
-    <link rel="prev" title="Дифференциальные уравнения" href="../../methods/differential_equations.html" />
+    <link rel="next" title="Полезные ссылки" href="../../references.html" />
+    <link rel="prev" title="Control Plane" href="control_plane.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -212,11 +212,11 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DevOps</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="example.html">Пример архитектуры</a></li>
 <li class="toctree-l2"><a class="reference internal" href="architecture.html">Архитектура</a></li>
 <li class="toctree-l2"><a class="reference internal" href="control_plane.html">Control Plane</a></li>
-<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Node</a></li>
 </ul>
 </details></li>
 </ul>
@@ -295,7 +295,7 @@
       
       
       
-      <li><a href="https://github.com/Gustaros/basics/issues/new?title=Issue%20on%20page%20%2Fdevops/kubernetes/intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Gustaros/basics/issues/new?title=Issue%20on%20page%20%2Fdevops/kubernetes/node.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -325,7 +325,7 @@
       
       
       
-      <li><a href="../../_sources/devops/kubernetes/intro.md" target="_blank"
+      <li><a href="../../_sources/devops/kubernetes/node.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -409,7 +409,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Kubernetes</h1>
+    <h1>Node</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -419,8 +419,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Типичные сценарии применения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Примеры конкретных проектов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubelet">kubelet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kube-proxy">kube-proxy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#container-runtime">Среда выполнения контейнеров (Container Runtime)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Итоговая структура рабочего узла Kubernetes:</a></li>
 </ul>
             </nav>
         </div>
@@ -432,36 +434,63 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="kubernetes">
-<h1>Kubernetes<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h1>
-<p><strong>Kubernetes</strong> обычно используется для крупных, распределённых, микросервисных и облачных проектов, где требуется автоматизация управления и высокая отказоустойчивость<sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup>.</p>
-<section id="id1">
-<h2>Типичные сценарии применения<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="node">
+<h1>Node<a class="headerlink" href="#node" title="Link to this heading">#</a></h1>
+<p>Рабочий узел (Node) в Kubernetes содержит ключевые компоненты, которые обеспечивают запуск, управление и сетевое взаимодействие подов и контейнеров. Основные компоненты узла включают:</p>
+<section id="kubelet">
+<h2>kubelet<a class="headerlink" href="#kubelet" title="Link to this heading">#</a></h2>
+<p>Это агент, запущенный на каждом рабочем узле. Он:</p>
 <ul class="simple">
-<li><p><strong>Микросервисные приложения</strong><br />
-Проекты, разделённые на множество независимых сервисов (например, интернет-магазины, финансовые платформы, социальные сети), где каждый сервис может обновляться и масштабироваться отдельно<sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup> <sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup>.</p></li>
-<li><p><strong>Веб-приложения и API</strong><br />
-Сайты и сервисы с высокой нагрузкой, поддерживающие большое количество одновременных пользователей или запросов (например, видеохостинги, SaaS, платформы для общения)<sup><a class="reference external" href="https://vkcloud.kz/blog/launching-a-project-in-kubernetes/">2</a></sup> <sup><a class="reference external" href="https://habr.com/ru/articles/752586/">8</a></sup>.</p></li>
-<li><p><strong>CI/CD пайплайны</strong><br />
-Инфраструктура, где важно быстро тестировать, собирать и выкатывать новые версии ПО — например, для автоматизации доставки обновлений и обслуживания облачных сервисов<sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup>.</p></li>
-<li><p><strong>Обработка данных и аналитика</strong><br />
-Кластеры для машинного обучения, ETL и Big Data, где процессы часто требуют масштабируемых, распределённых вычислений<sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup>.</p></li>
-<li><p><strong>IoT и приложения с распределённой архитектурой</strong><br />
-Системы, взаимодействующие с большим количеством устройств или типов функциональности (например, управление автомобилями, умный город)<sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup>.</p></li>
+<li><p>Получает инструкции и спецификации подов (PodSpecs) от Control Plane через API Server.</p></li>
+<li><p>Запускает, останавливает и следит за состоянием контейнеров в подах.</p></li>
+<li><p>Сообщает о состоянии подов и контейнеров обратно в Control Plane.</p></li>
+<li><p>Контролирует, чтобы контейнеры соответствовали описанию в манифестах и был поддержан их корректный жизненный цикл<sup><a class="reference external" href="https://servercore.com/ru/blog/articles/kubernetes/">1</a></sup> <sup><a class="reference external" href="https://kubernetes.io/ru/docs/concepts/overview/components/">3</a></sup>.</p></li>
 </ul>
 </section>
-<section id="id2">
-<h2>Примеры конкретных проектов<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="kube-proxy">
+<h2>kube-proxy<a class="headerlink" href="#kube-proxy" title="Link to this heading">#</a></h2>
+<p>Компонент, работающий на узле и отвечающий за сетевую часть:</p>
 <ul class="simple">
-<li><p>Интернет-платформы и маркетплейсы с большим количеством микросервисов<sup><a class="reference external" href="https://inostudio.com/blog/articles-devops/opyt-vnedreniya-kubernetes-proekt-taynyy-santa/">5</a></sup> <sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup></p></li>
-<li><p>API-сервисы для мобильных и веб-приложений, где важно оптимизировать ресурсы и обеспечить отказоустойчивость<sup><a class="reference external" href="https://vkcloud.kz/blog/launching-a-project-in-kubernetes/">2</a></sup> <sup><a class="reference external" href="https://inostudio.com/blog/articles-devops/opyt-vnedreniya-kubernetes-proekt-taynyy-santa/">5</a></sup></p></li>
-<li><p>Внутренние корпоративные порталы и системы, которые используют облачную инфраструктуру для упрощения управления и масштабирования<sup><a class="reference external" href="https://habr.com/ru/articles/752586/">8</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup></p></li>
-<li><p>Сервисы для мониторинга, логирования, и работы с большими данными (например, Prometheus, Grafana, Elastic)<sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></sup></p></li>
+<li><p>Поддерживает сетевые правила для маршрутизации и балансировки нагрузки между подами.</p></li>
+<li><p>Использует iptables или IPVS для маршрутизации внутри кластера.</p></li>
+<li><p>Обеспечивает устойчивую связь между сервисами и подами, как внутри, так и снаружи кластера<sup><a class="reference external" href="https://habr.com/ru/companies/slurm/articles/713884/">2</a></sup> <sup><a class="reference external" href="https://servercore.com/ru/blog/articles/kubernetes/">1</a></sup>.</p></li>
 </ul>
-<p><strong>Вывод: Kubernetes нужен для сложных, быстроразвивающихся проектов, где важны масштабирование, автоматизация и устойчивость к сбоям, особенно если используется микросервисная архитектура или требуется гибкое развертывание в облаке</strong><sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup> <sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></sup> <sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup>.</p>
 </section>
-<div class="toctree-wrapper compound">
+<section id="container-runtime">
+<h2>Среда выполнения контейнеров (Container Runtime)<a class="headerlink" href="#container-runtime" title="Link to this heading">#</a></h2>
+<p>Это программное обеспечение, которое непосредственно запускает контейнеры на узлах. Kubernetes поддерживает разные среды выполнения, например:</p>
+<ul class="simple">
+<li><p>containerd,</p></li>
+<li><p>CRI-O,</p></li>
+<li><p>Docker (устаревший в Kubernetes, но всё ещё встречающийся).
+Container Runtime обеспечивает жизненный цикл контейнера, включая запуск, остановку и удаление<sup><a class="reference external" href="https://kubernetes.io/ru/docs/concepts/overview/components/">3</a></sup> <sup><a class="reference external" href="https://servercore.com/ru/blog/articles/kubernetes/">1</a></sup>.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="kubernetes">
+<h2>Итоговая структура рабочего узла Kubernetes:<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Компонент</p></th>
+<th class="head"><p>Описание</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>kubelet</p></td>
+<td><p>Агент управления подами и контейнерами</p></td>
+</tr>
+<tr class="row-odd"><td><p>kube-proxy</p></td>
+<td><p>Сетевой прокси для балансировки и маршрутизации трафика</p></td>
+</tr>
+<tr class="row-even"><td><p>Container Runtime</p></td>
+<td><p>Среда выполнения для запуска контейнеров</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>Этот набор компонентов позволяет рабочему узлу выполнять задачи по запуску и поддержанию контейнеров в соответствие с инструкциями Control Plane, обеспечивать сетевое взаимодействие и поддерживать нагрузку от приложений в Kubernetes кластере.<a class="reference external" href="https://habr.com/ru/companies/slurm/articles/713884/">1</a><a class="reference external" href="https://kubernetes.io/ru/docs/concepts/overview/components/">3</a>
+Этот набор компонентов позволяет рабочему узлу выполнять задачи по запуску и поддержанию контейнеров в соответствие с инструкциями Control Plane, обеспечивать сетевое взаимодействие и поддерживать нагрузку от приложений в Kubernetes кластере<sup><a class="reference external" href="https://servercore.com/ru/blog/articles/kubernetes/">1</a></sup> <sup><a class="reference external" href="https://habr.com/ru/companies/slurm/articles/713884/">2</a></sup> <sup><a class="reference external" href="https://kubernetes.io/ru/docs/concepts/overview/components/">3</a></sup>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -495,20 +524,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../methods/differential_equations.html"
+       href="control_plane.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Дифференциальные уравнения</p>
+        <p class="prev-next-title">Control Plane</p>
       </div>
     </a>
     <a class="right-next"
-       href="example.html"
+       href="../../references.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Пример архитектуры</p>
+        <p class="prev-next-title">Полезные ссылки</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -528,8 +557,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Типичные сценарии применения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Примеры конкретных проектов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubelet">kubelet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kube-proxy">kube-proxy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#container-runtime">Среда выполнения контейнеров (Container Runtime)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Итоговая структура рабочего узла Kubernetes:</a></li>
 </ul>
   </nav></div>
 
