@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Kubernetes &#8212; basics</title>
+    <title>Архитектура &#8212; basics</title>
   
   
   
@@ -57,13 +57,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'devops/kubernetes/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'devops/kubernetes/architecture';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Пример архитектуры" href="example.html" />
-    <link rel="prev" title="Дифференциальные уравнения" href="../../methods/differential_equations.html" />
+    <link rel="next" title="Полезные ссылки" href="../../references.html" />
+    <link rel="prev" title="Пример архитектуры" href="example.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -212,9 +212,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DevOps</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="example.html">Пример архитектуры</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html">Архитектура</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Архитектура</a></li>
 </ul>
 </details></li>
 </ul>
@@ -293,7 +293,7 @@
       
       
       
-      <li><a href="https://github.com/Gustaros/basics/issues/new?title=Issue%20on%20page%20%2Fdevops/kubernetes/intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Gustaros/basics/issues/new?title=Issue%20on%20page%20%2Fdevops/kubernetes/architecture.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -323,7 +323,7 @@
       
       
       
-      <li><a href="../../_sources/devops/kubernetes/intro.md" target="_blank"
+      <li><a href="../../_sources/devops/kubernetes/architecture.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -407,7 +407,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Kubernetes</h1>
+    <h1>Архитектура</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -417,8 +417,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Типичные сценарии применения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Примеры конкретных проектов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Где находится Kubernetes и как происходит связь</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Как микросервисы связываются между собой</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Итог</a></li>
 </ul>
             </nav>
         </div>
@@ -430,36 +431,37 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="kubernetes">
-<h1>Kubernetes<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h1>
-<p><strong>Kubernetes</strong> обычно используется для крупных, распределённых, микросервисных и облачных проектов, где требуется автоматизация управления и высокая отказоустойчивость<a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">3</a>.</p>
-<section id="id1">
-<h2>Типичные сценарии применения<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Архитектура<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>В Kubernetes каждый сервис (микросервис) может запускаться не на одном отдельном сервере, а распределяться по разным узлам (нодам) кластера. На каждом узле могут работать несколько подов (Pods) — атомарных единиц развертывания, внутри которых запускаются контейнеры с приложениями<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p>
+<section id="kubernetes">
+<h2>Где находится Kubernetes и как происходит связь<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Микросервисные приложения</strong><br />
-Проекты, разделённые на множество независимых сервисов (например, интернет-магазины, финансовые платформы, социальные сети), где каждый сервис может обновляться и масштабироваться отдельно<a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">4</a>.</p></li>
-<li><p><strong>Веб-приложения и API</strong><br />
-Сайты и сервисы с высокой нагрузкой, поддерживающие большое количество одновременных пользователей или запросов (например, видеохостинги, SaaS, платформы для общения)<a class="reference external" href="https://habr.com/ru/articles/752586/">2</a>.</p></li>
-<li><p><strong>CI/CD пайплайны</strong><br />
-Инфраструктура, где важно быстро тестировать, собирать и выкатывать новые версии ПО — например, для автоматизации доставки обновлений и обслуживания облачных сервисов<a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">3</a>.</p></li>
-<li><p><strong>Обработка данных и аналитика</strong><br />
-Кластеры для машинного обучения, ETL и Big Data, где процессы часто требуют масштабируемых, распределённых вычислений<a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">7</a>.</p></li>
-<li><p><strong>IoT и приложения с распределённой архитектурой</strong><br />
-Системы, взаимодействующие с большим количеством устройств или типов функциональности (например, управление автомобилями, умный город)<a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a>.</p></li>
+<li><p><strong>Кластер Kubernetes</strong> состоит из управляемого Control Plane и множества рабочих узлов (Nodes). Control Plane отвечает за планирование, распределение подов по узлам и общую оркестрацию<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p></li>
+<li><p><strong>Под (Pod)</strong> — это одна или несколько контейнеризированных частей приложения, которые работают вместе на одном узле, имеют общий IP и ресурсы<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p></li>
+<li><p><strong>Узлы (Nodes)</strong> — это серверы (виртуальные или физические), на которых запускаются поды. Control Plane следит, чтобы нагрузка распределялась равномерно и поды запускались корректно<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p></li>
 </ul>
 </section>
 <section id="id2">
-<h2>Примеры конкретных проектов<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>Как микросервисы связываются между собой<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Интернет-платформы и маркетплейсы с большим количеством микросервисов<a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">5</a></p></li>
-<li><p>API-сервисы для мобильных и веб-приложений, где важно оптимизировать ресурсы и обеспечить отказоустойчивость<a class="reference external" href="https://inostudio.com/blog/articles-devops/opyt-vnedreniya-kubernetes-proekt-taynyy-santa/">2</a></p></li>
-<li><p>Внутренние корпоративные порталы и системы, которые используют облачную инфраструктуру для упрощения управления и масштабирования<a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">8</a></p></li>
-<li><p>Сервисы для мониторинга, логирования, и работы с большими данными (например, Prometheus, Grafana, Elastic)<a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></p></li>
+<li><p>Для взаимодействия подов в Kubernetes используют объект <strong>Service (сервис)</strong>. Это абстракция, которая предоставляет постоянный IP-адрес и DNS-имя для группы подов<sup><a class="reference external" href="https://habr.com/ru/articles/488796/">1</a></sup> <sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/expose/expose-intro/">4</a></sup>.</p></li>
+<li><p>Поскольку поды динамичны и могут перезапускаться, IP подов меняется. Service маскирует это, направляя запросы по виртуальному IP к нужным подам на основе селекторов и меток (labels)<sup><a class="reference external" href="https://ipsoftware.ru/posts-cloud/k8s-3-services/">5</a></sup>.</p></li>
+<li><p>Внутри кластера сервисы общаются по DNS-именам, например, <code class="docutils literal notranslate"><span class="pre">service-name.namespace.svc.cluster.local</span></code>, что упрощает взаимодействие и поддерживает отказоустойчивость<sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/zbcl1k/how_should_microservicespods_communicate_in_a/">7</a></sup>.</p></li>
 </ul>
-<p><strong>Вывод: Kubernetes нужен для сложных, быстроразвивающихся проектов, где важны масштабирование, автоматизация и устойчивость к сбоям, особенно если используется микросервисная архитектура или требуется гибкое развертывание в облаке</strong><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">4</a><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a>.</p>
 </section>
-<div class="toctree-wrapper compound">
-</div>
+<section id="id3">
+<h2>Итог<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Микросервисы не привязаны к одному серверу, а распределены по узлам кластера<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p></li>
+<li><p>Kubernetes контролирует размещение и поддерживает нужное количество экземпляров сервисов<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p></li>
+<li><p>Сервисы обеспечивают стабильное взаимодействие между подами, скрывая их динамический характер и балансируя нагрузку<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/expose/expose-intro/">4</a></sup> <sup><a class="reference external" href="https://ipsoftware.ru/posts-cloud/k8s-3-services/">5</a></sup>.</p></li>
+</ul>
+<p>Таким образом, Kubernetes представляет собой распределённую платформу с централизованным управлением, где физические или виртуальные серверы объединены в кластер, а связь между сервисами обеспечивается через объекты Service с постоянными адресами внутри кластера. В Kubernetes микросервисы запускаются не обязательно на отдельных физических серверах, а распределяются по узлам (Nodes) кластера, которыми могут быть виртуальные или физические машины. Узел может содержать несколько подов (Pods) — групп контейнеров с одним IP-адресом и ресурсами, запускаемых вместе на одном узле. Таким образом, каждый микросервис может иметь несколько подов, размещённых на разных узлах кластера<sup><a class="reference external" href="https://habr.com/ru/articles/488796/">1</a></sup> <sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/expose/expose-intro/">4</a></sup> <sup><a class="reference external" href="https://ipsoftware.ru/posts-cloud/k8s-3-services/">5</a></sup>.</p>
+<p>Связь между подами происходит через объект Kubernetes под названием Service. Этот объект предоставляет стабильный виртуальный IP-адрес и DNS-имя для группы подов, скрывая динамическую смену IP самих подов и обеспечивая балансировку нагрузки. Поды общаются друг с другом по DNS-именам, например, service-name.namespace.svc.cluster.local, что упрощает взаимодействие и обеспечивает отказоустойчивость.</p>
+<p>Сам Kubernetes состоит из управляющей плоскости (control plane), которая координирует кластер, и рабочих узлов, на которых запускаются поды. Control plane следит за тем, чтобы поды успешно запускались, распределялись по узлам и масштабировались в зависимости от нагрузки.</p>
+<p>Таким образом, микросервисы работают как распределённые приложения в кластере, а Kubernetes обеспечивает их организацию, взаимодействие и надёжность через сервисы и контейнеры, распределённые по множеству серверов<sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/expose/expose-intro/">4</a></sup> <sup><a class="reference external" href="https://ipsoftware.ru/posts-cloud/k8s-3-services/">5</a></sup> <sup><a class="reference external" href="https://habr.com/ru/articles/488796/">1</a></sup> <sup><a class="reference external" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/">2</a></sup>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -493,20 +495,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../methods/differential_equations.html"
+       href="example.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Дифференциальные уравнения</p>
+        <p class="prev-next-title">Пример архитектуры</p>
       </div>
     </a>
     <a class="right-next"
-       href="example.html"
+       href="../../references.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Пример архитектуры</p>
+        <p class="prev-next-title">Полезные ссылки</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -526,8 +528,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Типичные сценарии применения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Примеры конкретных проектов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Где находится Kubernetes и как происходит связь</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Как микросервисы связываются между собой</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Итог</a></li>
 </ul>
   </nav></div>
 
