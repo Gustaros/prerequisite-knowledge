@@ -62,7 +62,7 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Полезные ссылки" href="../../references.html" />
+    <link rel="next" title="Архитектура" href="architecture.html" />
     <link rel="prev" title="Kubernetes" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -214,6 +214,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Пример архитектуры</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Архитектура</a></li>
 </ul>
 </details></li>
 </ul>
@@ -434,19 +435,19 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Пример архитектуры<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>Пример архитектуры: <strong>микросервисное приложение для прогноза погоды</strong>, состоящее из фронтенда, сервисов с логикой, и базы данных, работает в Kubernetes<a class="reference external" href="https://selectel.ru/blog/what-is-microservice-architecture/">1</a>.</p>
+<p>Пример архитектуры: <strong>микросервисное приложение для прогноза погоды</strong>, состоящее из фронтенда, сервисов с логикой, и базы данных, работает в Kubernetes<sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup> <sup><a class="reference external" href="https://selectel.ru/blog/what-is-microservice-architecture/">2</a></sup>.</p>
 <section id="id2">
 <h2>Схема работы приложения<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Weather-front</strong>: веб-интерфейс, позволяет вводить город и получать прогноз<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
-<li><p><strong>Weather-services</strong>: сервис, принимает запрос от фронтенда, обращается к внешнему API погоды и возвращает результат<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
-<li><p><strong>Weather-db</strong>: база данных, сохраняет историю запросов и результатов<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
+<li><p><strong>Weather-front</strong>: веб-интерфейс, позволяет вводить город и получать прогноз<sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p></li>
+<li><p><strong>Weather-services</strong>: сервис, принимает запрос от фронтенда, обращается к внешнему API погоды и возвращает результат<sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p></li>
+<li><p><strong>Weather-db</strong>: база данных, сохраняет историю запросов и результатов<sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p></li>
 <li><p>Каждый компонент — отдельный микросервис, развёрнутый как контейнер.</p></li>
 </ul>
 <section id="id3">
 <h3>Поток запроса<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
-<li><p>Пользователь вводит город на сайте (Weather-front)<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
+<li><p>Пользователь вводит город на сайте (Weather-front)<sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p></li>
 <li><p>Weather-front передаёт город Weather-services.</p></li>
 <li><p>Weather-services берёт данные из Weather-db и/или из внешнего погодного API.</p></li>
 <li><p>Ответ возвращается пользователю, результат хранится в базе данных.</p></li>
@@ -456,14 +457,14 @@ document.write(`
 <section id="kubernetes">
 <h2>Как помогает Kubernetes<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Автоматизация развертывания</strong>: для каждого микросервиса описывают объект Deployment, и Kubernetes сам запускает нужное количество экземпляров (подов)<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">6</a>.</p></li>
-<li><p><strong>Горизонтальное масштабирование</strong>: если резко увеличивается число запросов, Kubernetes может автоматически добавить новые копии сервисов под нагрузку<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">3</a>.</p></li>
-<li><p><strong>Самовосстановление</strong>: при сбое контейнера Kubernetes сам перезапустит нужный сервис, пользователь этого не заметит<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a>.</p></li>
-<li><p><strong>Обновления и откаты</strong>: можно выкатить новую версию микросервиса — Kubernetes обновит поочерёдно поды с минимальными простоями. При ошибке откатится на старую версию<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">2</a>.</p></li>
-<li><p><strong>Мониторинг и балансировка</strong>: прочие инструменты (например, readiness/liveness probes) поддерживают отказоустойчивость и отслеживают работоспособность сервисов<a class="reference external" href="https://slurm.io/blog/prilozheniya-v-kubernetes-razvertyvanie-slozhnyh-konfiguracij">5</a>.</p></li>
-<li><p><strong>Разделение ресурсов</strong>: каждый сервис может работать на разных языках, с разными зависимостями — Kubernetes управляет этим и равномерно распределяет нагрузку между серверами<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a>.</p></li>
+<li><p><strong>Автоматизация развертывания</strong>: для каждого микросервиса описывают объект Deployment, и Kubernetes сам запускает нужное количество экземпляров (подов)<sup><a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a></sup> <sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p></li>
+<li><p><strong>Горизонтальное масштабирование</strong>: если резко увеличивается число запросов, Kubernetes может автоматически добавить новые копии сервисов под нагрузку<sup><a class="reference external" href="https://bigdataschool.ru/blog/kafka-and-kubernetes-microservice-architecture-sixfold-case/">3</a></sup> <sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p></li>
+<li><p><strong>Самовосстановление</strong>: при сбое контейнера Kubernetes сам перезапустит нужный сервис, пользователь этого не заметит<sup><a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a></sup>.</p></li>
+<li><p><strong>Обновления и откаты</strong>: можно выкатить новую версию микросервиса — Kubernetes обновит поочерёдно поды с минимальными простоями. При ошибке откатится на старую версию<sup><a class="reference external" href="https://selectel.ru/blog/what-is-microservice-architecture/">2</a></sup> <sup><a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a></sup>.</p></li>
+<li><p><strong>Мониторинг и балансировка</strong>: прочие инструменты (например, readiness/liveness probes) поддерживают отказоустойчивость и отслеживают работоспособность сервисов<sup><a class="reference external" href="https://slurm.io/blog/prilozheniya-v-kubernetes-razvertyvanie-slozhnyh-konfiguracij">5</a></sup>.</p></li>
+<li><p><strong>Разделение ресурсов</strong>: каждый сервис может работать на разных языках, с разными зависимостями — Kubernetes управляет этим и равномерно распределяет нагрузку между серверами<sup><a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a></sup>.</p></li>
 </ul>
-<p><strong>Вывод:</strong> Kubernetes превращает ручное управление десятками микросервисов в полностью автоматизированную систему, где приложение устойчиво к сбоям, масштабируется, обновляется и оптимально использует ресурсы<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">2</a><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p>
+<p><strong>Вывод:</strong> Kubernetes превращает ручное управление десятками микросервисов в полностью автоматизированную систему, где приложение устойчиво к сбоям, масштабируется, обновляется и оптимально использует ресурсы<sup><a class="reference external" href="https://selectel.ru/blog/what-is-microservice-architecture/">2</a></sup> <sup><a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a></sup> <sup><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a></sup>.</p>
 </section>
 </section>
 
@@ -507,11 +508,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../../references.html"
+       href="architecture.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Полезные ссылки</p>
+        <p class="prev-next-title">Архитектура</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
