@@ -434,19 +434,19 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Пример архитектуры<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>Пример архитектуры: <strong>микросервисное приложение для прогноза погоды</strong>, состоящее из фронтенда, сервисов с логикой, и базы данных, работает в Kubernetes.[1][2]</p>
+<p>Пример архитектуры: <strong>микросервисное приложение для прогноза погоды</strong>, состоящее из фронтенда, сервисов с логикой, и базы данных, работает в Kubernetes<a class="reference external" href="https://selectel.ru/blog/what-is-microservice-architecture/">1</a>.</p>
 <section id="id2">
 <h2>Схема работы приложения<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Weather-front</strong>: веб-интерфейс, позволяет вводить город и получать прогноз.[1]</p></li>
-<li><p><strong>Weather-services</strong>: сервис, принимает запрос от фронтенда, обращается к внешнему API погоды и возвращает результат.[1]</p></li>
-<li><p><strong>Weather-db</strong>: база данных, сохраняет историю запросов и результатов.[1]</p></li>
+<li><p><strong>Weather-front</strong>: веб-интерфейс, позволяет вводить город и получать прогноз<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
+<li><p><strong>Weather-services</strong>: сервис, принимает запрос от фронтенда, обращается к внешнему API погоды и возвращает результат<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
+<li><p><strong>Weather-db</strong>: база данных, сохраняет историю запросов и результатов<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
 <li><p>Каждый компонент — отдельный микросервис, развёрнутый как контейнер.</p></li>
 </ul>
 <section id="id3">
 <h3>Поток запроса<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
-<li><p>Пользователь вводит город на сайте (Weather-front).[1]</p></li>
+<li><p>Пользователь вводит город на сайте (Weather-front)<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p></li>
 <li><p>Weather-front передаёт город Weather-services.</p></li>
 <li><p>Weather-services берёт данные из Weather-db и/или из внешнего погодного API.</p></li>
 <li><p>Ответ возвращается пользователю, результат хранится в базе данных.</p></li>
@@ -456,23 +456,14 @@ document.write(`
 <section id="kubernetes">
 <h2>Как помогает Kubernetes<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Автоматизация развертывания</strong>: для каждого микросервиса описывают объект Deployment, и Kubernetes сам запускает нужное количество экземпляров (подов).[6][1]</p></li>
-<li><p><strong>Горизонтальное масштабирование</strong>: если резко увеличивается число запросов, Kubernetes может автоматически добавить новые копии сервисов под нагрузку.[3][1]</p></li>
-<li><p><strong>Самовосстановление</strong>: при сбое контейнера Kubernetes сам перезапустит нужный сервис, пользователь этого не заметит.[6]</p></li>
-<li><p><strong>Обновления и откаты</strong>: можно выкатить новую версию микросервиса — Kubernetes обновит поочерёдно поды с минимальными простоями. При ошибке откатится на старую версию.[2][6]</p></li>
-<li><p><strong>Мониторинг и балансировка</strong>: прочие инструменты (например, readiness/liveness probes) поддерживают отказоустойчивость и отслеживают работоспособность сервисов.[5]</p></li>
-<li><p><strong>Разделение ресурсов</strong>: каждый сервис может работать на разных языках, с разными зависимостями — Kubernetes управляет этим и равномерно распределяет нагрузку между серверами.[6]</p></li>
+<li><p><strong>Автоматизация развертывания</strong>: для каждого микросервиса описывают объект Deployment, и Kubernetes сам запускает нужное количество экземпляров (подов)<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">6</a>.</p></li>
+<li><p><strong>Горизонтальное масштабирование</strong>: если резко увеличивается число запросов, Kubernetes может автоматически добавить новые копии сервисов под нагрузку<a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">3</a>.</p></li>
+<li><p><strong>Самовосстановление</strong>: при сбое контейнера Kubernetes сам перезапустит нужный сервис, пользователь этого не заметит<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a>.</p></li>
+<li><p><strong>Обновления и откаты</strong>: можно выкатить новую версию микросервиса — Kubernetes обновит поочерёдно поды с минимальными простоями. При ошибке откатится на старую версию<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">2</a>.</p></li>
+<li><p><strong>Мониторинг и балансировка</strong>: прочие инструменты (например, readiness/liveness probes) поддерживают отказоустойчивость и отслеживают работоспособность сервисов<a class="reference external" href="https://slurm.io/blog/prilozheniya-v-kubernetes-razvertyvanie-slozhnyh-konfiguracij">5</a>.</p></li>
+<li><p><strong>Разделение ресурсов</strong>: каждый сервис может работать на разных языках, с разными зависимостями — Kubernetes управляет этим и равномерно распределяет нагрузку между серверами<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a>.</p></li>
 </ul>
-<p><strong>Вывод:</strong> Kubernetes превращает ручное управление десятками микросервисов в полностью автоматизированную систему, где приложение устойчиво к сбоям, масштабируется, обновляется и оптимально использует ресурсы.[2][6][1]</p>
-<p><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>
-<a class="reference external" href="https://selectel.ru/blog/what-is-microservice-architecture/">2</a>
-<a class="reference external" href="https://bigdataschool.ru/blog/kafka-and-kubernetes-microservice-architecture-sixfold-case/">3</a>
-<a class="reference external" href="https://servercore.com/ru/blog/articles/how-managed-kubernetes-helps-business-maintain-service-accessibility/">4</a>
-<a class="reference external" href="https://slurm.io/blog/prilozheniya-v-kubernetes-razvertyvanie-slozhnyh-konfiguracij">5</a>
-<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">6</a>
-<a class="reference external" href="https://habr.com/ru/companies/otus/articles/562214/">7</a>
-<a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/omno11/example_of_microserviceoriented_application_for/">8</a>
-<a class="reference external" href="https://www.youtube.com/watch?v=pq2swO_zRk8">9</a></p>
+<p><strong>Вывод:</strong> Kubernetes превращает ручное управление десятками микросервисов в полностью автоматизированную систему, где приложение устойчиво к сбоям, масштабируется, обновляется и оптимально использует ресурсы<a class="reference external" href="https://smartgopro.com/novosti2/kubernetes/">2</a><a class="reference external" href="https://habr.com/ru/companies/otus/articles/547552/">1</a>.</p>
 </section>
 </section>
 
