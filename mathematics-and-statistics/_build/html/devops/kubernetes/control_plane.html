@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Kubernetes &#8212; basics</title>
+    <title>Control Plane &#8212; basics</title>
   
   
   
@@ -57,13 +57,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'devops/kubernetes/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'devops/kubernetes/control_plane';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Пример архитектуры" href="example.html" />
-    <link rel="prev" title="Дифференциальные уравнения" href="../../methods/differential_equations.html" />
+    <link rel="next" title="Полезные ссылки" href="../../references.html" />
+    <link rel="prev" title="Архитектура" href="architecture.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -212,10 +212,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DevOps</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="example.html">Пример архитектуры</a></li>
 <li class="toctree-l2"><a class="reference internal" href="architecture.html">Архитектура</a></li>
-<li class="toctree-l2"><a class="reference internal" href="control_plane.html">Control Plane</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Control Plane</a></li>
 </ul>
 </details></li>
 </ul>
@@ -294,7 +294,7 @@
       
       
       
-      <li><a href="https://github.com/Gustaros/basics/issues/new?title=Issue%20on%20page%20%2Fdevops/kubernetes/intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Gustaros/basics/issues/new?title=Issue%20on%20page%20%2Fdevops/kubernetes/control_plane.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -324,7 +324,7 @@
       
       
       
-      <li><a href="../../_sources/devops/kubernetes/intro.md" target="_blank"
+      <li><a href="../../_sources/devops/kubernetes/control_plane.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -408,7 +408,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Kubernetes</h1>
+    <h1>Control Plane</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -418,8 +418,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Типичные сценарии применения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Примеры конкретных проектов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Основные компоненты Control Plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Где физически находится Control Plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes-control-plane">Пример реальной системы Kubernetes с Control Plane</a></li>
 </ul>
             </nav>
         </div>
@@ -431,36 +432,66 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="kubernetes">
-<h1>Kubernetes<a class="headerlink" href="#kubernetes" title="Link to this heading">#</a></h1>
-<p><strong>Kubernetes</strong> обычно используется для крупных, распределённых, микросервисных и облачных проектов, где требуется автоматизация управления и высокая отказоустойчивость<sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup>.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="control-plane">
+<h1>Control Plane<a class="headerlink" href="#control-plane" title="Link to this heading">#</a></h1>
+<p>Control Plane (управляющий слой) Kubernetes — это набор сервисов и компонентов, которые управляют всем кластером. Он обычно располагается на одном или нескольких специальных узлах, называемых мастер-узлами (control plane nodes). Эти узлы могут быть отдельными физическими или виртуальными серверами, выделенными только для управления кластером.<sup><a class="reference external" href="https://habr.com/ru/companies/flant/articles/583660/">1</a></sup> <sup><a class="reference external" href="https://learning.infoteam.msk.ru/Rebrain/K8s/Kubernetes%20v2/KUB%2007%20Kubernetes%20Control%20Plane.pdf">2</a></sup> <sup><a class="reference external" href="https://ininsys.ru/stati/arhitektura-kubernetes-control-plane-i-worker-nodes/">4</a></sup></p>
 <section id="id1">
-<h2>Типичные сценарии применения<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>Основные компоненты Control Plane<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Микросервисные приложения</strong><br />
-Проекты, разделённые на множество независимых сервисов (например, интернет-магазины, финансовые платформы, социальные сети), где каждый сервис может обновляться и масштабироваться отдельно<sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup> <sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup>.</p></li>
-<li><p><strong>Веб-приложения и API</strong><br />
-Сайты и сервисы с высокой нагрузкой, поддерживающие большое количество одновременных пользователей или запросов (например, видеохостинги, SaaS, платформы для общения)<sup><a class="reference external" href="https://vkcloud.kz/blog/launching-a-project-in-kubernetes/">2</a></sup> <sup><a class="reference external" href="https://habr.com/ru/articles/752586/">8</a></sup>.</p></li>
-<li><p><strong>CI/CD пайплайны</strong><br />
-Инфраструктура, где важно быстро тестировать, собирать и выкатывать новые версии ПО — например, для автоматизации доставки обновлений и обслуживания облачных сервисов<sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup>.</p></li>
-<li><p><strong>Обработка данных и аналитика</strong><br />
-Кластеры для машинного обучения, ETL и Big Data, где процессы часто требуют масштабируемых, распределённых вычислений<sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup>.</p></li>
-<li><p><strong>IoT и приложения с распределённой архитектурой</strong><br />
-Системы, взаимодействующие с большим количеством устройств или типов функциональности (например, управление автомобилями, умный город)<sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup>.</p></li>
+<li><p><strong>API Server</strong> — точка входа для всех запросов к кластеру, через нее происходит взаимодействие с Kubernetes (например, через kubectl).<sup><a class="reference external" href="https://kubernetes.io/ru/docs/concepts/overview/components/">7</a></sup> <sup><a class="reference external" href="https://habr.com/ru/companies/flant/articles/583660/">1</a></sup></p></li>
+<li><p><strong>Scheduler</strong> — распределяет поды по рабочим узлам на основе ресурсов и правил.<sup><a class="reference external" href="https://learning.infoteam.msk.ru/Rebrain/K8s/Kubernetes%20v2/KUB%2007%20Kubernetes%20Control%20Plane.pdf">2</a></sup> <sup><a class="reference external" href="https://ininsys.ru/stati/arhitektura-kubernetes-control-plane-i-worker-nodes/">4</a></sup></p></li>
+<li><p><strong>Controller Manager</strong> — следит за состоянием кластера и обеспечивает нужное число подов, обновления, масштабирование и т.д.. <sup><a class="reference external" href="https://ininsys.ru/stati/arhitektura-kubernetes-control-plane-i-worker-nodes/">4</a></sup> <sup><a class="reference external" href="https://learning.infoteam.msk.ru/Rebrain/K8s/Kubernetes%20v2/KUB%2007%20Kubernetes%20Control%20Plane.pdf">2</a></sup></p></li>
+<li><p><strong>etcd</strong> — распределённое key-value хранилище, где хранится текущая конфигурация и состояние кластера.<sup><a class="reference external" href="https://learning.infoteam.msk.ru/Rebrain/K8s/Kubernetes%20v2/KUB%2007%20Kubernetes%20Control%20Plane.pdf">2</a></sup> <sup><a class="reference external" href="https://ininsys.ru/stati/arhitektura-kubernetes-control-plane-i-worker-nodes/">4</a></sup></p></li>
 </ul>
 </section>
 <section id="id2">
-<h2>Примеры конкретных проектов<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>Где физически находится Control Plane<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Интернет-платформы и маркетплейсы с большим количеством микросервисов<sup><a class="reference external" href="https://inostudio.com/blog/articles-devops/opyt-vnedreniya-kubernetes-proekt-taynyy-santa/">5</a></sup> <sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup></p></li>
-<li><p>API-сервисы для мобильных и веб-приложений, где важно оптимизировать ресурсы и обеспечить отказоустойчивость<sup><a class="reference external" href="https://vkcloud.kz/blog/launching-a-project-in-kubernetes/">2</a></sup> <sup><a class="reference external" href="https://inostudio.com/blog/articles-devops/opyt-vnedreniya-kubernetes-proekt-taynyy-santa/">5</a></sup></p></li>
-<li><p>Внутренние корпоративные порталы и системы, которые используют облачную инфраструктуру для упрощения управления и масштабирования<sup><a class="reference external" href="https://habr.com/ru/articles/752586/">8</a></sup> <sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup></p></li>
-<li><p>Сервисы для мониторинга, логирования, и работы с большими данными (например, Prometheus, Grafana, Elastic)<sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></sup></p></li>
+<li><p>В типичном кластере Kubernetes Control Plane развёрнут на одном или нескольких узлах, которые не запускают рабочие нагрузки (поды приложений). Они отвечают исключительно за управление и координацию кластера.<sup><a class="reference external" href="https://habr.com/ru/companies/flant/articles/583660/">1</a></sup> <sup><a class="reference external" href="https://ininsys.ru/stati/arhitektura-kubernetes-control-plane-i-worker-nodes/">4</a></sup></p></li>
+<li><p>Для обеспечения отказоустойчивости Control Plane обычно развёртывают на нескольких узлах, чтобы при сбое одного узла управление переходило к другому.<sup><a class="reference external" href="https://habr.com/ru/companies/first/articles/844002/">3</a></sup> <sup><a class="reference external" href="https://androsov-it.ru/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BB%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0-kubernetes-1-27-1-%D0%B8%D0%B7-%D1%82%D1%80%D0%B5%D1%85-control-plane-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE/">6</a></sup></p></li>
 </ul>
-<p><strong>Вывод: Kubernetes нужен для сложных, быстроразвивающихся проектов, где важны масштабирование, автоматизация и устойчивость к сбоям, особенно если используется микросервисная архитектура или требуется гибкое развертывание в облаке</strong><sup><a class="reference external" href="https://yandex.cloud/ru/blog/posts/2025/03/kubernetes-guide">4</a></sup> <sup><a class="reference external" href="https://www.reddit.com/r/kubernetes/comments/1gdcqm8/ideas_for_complex_projects/">7</a></sup> <sup><a class="reference external" href="https://drupal-coder.ru/blog/migraciya-proekta-v-kubernetes-iz-kakikh-etapov-sostoit-i-skolko-vremeni-zanimaet-opyt-it">3</a></sup>.</p>
 </section>
-<div class="toctree-wrapper compound">
+<section id="kubernetes-control-plane">
+<h2>Пример реальной системы Kubernetes с Control Plane<a class="headerlink" href="#kubernetes-control-plane" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Компоненты</p></th>
+<th class="head"><p>Описание</p></th>
+<th class="head"><p>Расположение</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Control Plane Nodes</p></td>
+<td><p>Узлы с API Server, Scheduler, Controller Manager, etcd</p></td>
+<td><p>Выделенные серверы (физические или ВМ)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Worker Nodes (Рабочие узлы)</p></td>
+<td><p>Узлы, на которых запускаются поды с контейнерами приложений</p></td>
+<td><p>Физические или виртуальные серверы</p></td>
+</tr>
+<tr class="row-even"><td><p>Поды (Pods)</p></td>
+<td><p>Минимальная единица запуска — один или несколько контейнеров</p></td>
+<td><p>Запускаются на рабочих узлах</p></td>
+</tr>
+<tr class="row-odd"><td><p>Services</p></td>
+<td><p>Абстракция для связи подов, обеспечивающая стабильный IP</p></td>
+<td><p>Работают поверх рабочих узлов</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>Пример создания кластера с несколькими Control Plane нодами:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kind.x-k8s.io/v1alpha4</span>
+<span class="nt">nodes</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worker</span>
+</pre></div>
+</div>
+<p>Здесь два узла отвечают за Control Plane, обеспечивая высокую доступность, а один — за запуск приложений.</p>
+<p><strong>Итог:</strong> Control Plane — это центральная управляющая часть Kubernetes, обычно развёрнутая на выделенных узлах или серверах, которая координирует работу всего кластера, в то время как сами приложения запускаются на рабочих узлах, распределённых по инфраструктуре.<sup><a class="reference external" href="https://habr.com/ru/companies/first/articles/844002/">3</a></sup> <sup><a class="reference external" href="https://ininsys.ru/stati/arhitektura-kubernetes-control-plane-i-worker-nodes/">4</a></sup> <sup><a class="reference external" href="https://habr.com/ru/companies/flant/articles/583660/">1</a></sup> <sup><a class="reference external" href="https://learning.infoteam.msk.ru/Rebrain/K8s/Kubernetes%20v2/KUB%2007%20Kubernetes%20Control%20Plane.pdf">2</a></sup></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -494,20 +525,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../methods/differential_equations.html"
+       href="architecture.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Дифференциальные уравнения</p>
+        <p class="prev-next-title">Архитектура</p>
       </div>
     </a>
     <a class="right-next"
-       href="example.html"
+       href="../../references.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Пример архитектуры</p>
+        <p class="prev-next-title">Полезные ссылки</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -527,8 +558,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Типичные сценарии применения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Примеры конкретных проектов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Основные компоненты Control Plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Где физически находится Control Plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes-control-plane">Пример реальной системы Kubernetes с Control Plane</a></li>
 </ul>
   </nav></div>
 
